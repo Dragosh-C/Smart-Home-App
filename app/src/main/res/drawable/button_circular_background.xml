@@ -1,0 +1,16 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer circle (the "margin" circle) -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#333333"/> <!-- Color of the circular margin -->
+            <size android:width="80dp" android:height="80dp"/> <!-- Size of the outer circle -->
+        </shape>
+    </item>
+
+    <!-- Inner button background circle -->
+    <item android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp">
+        <shape android:shape="oval">
+            <solid android:color="#555555"/> <!-- Color of the button background -->
+        </shape>
+    </item>
+</layer-list>
