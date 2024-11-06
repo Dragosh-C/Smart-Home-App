@@ -27,8 +27,8 @@
 
     <ImageButton
         android:id="@+id/add_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:background="?android:selectableItemBackgroundBorderless"
         android:src="@drawable/ic_plus_sign"
@@ -36,11 +36,11 @@
        />
 
         <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="54dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="44dp"
         android:background="?android:selectableItemBackgroundBorderless"
         android:src="@drawable/ic_settings_1"
         android:scaleType="fitCenter"
@@ -125,9 +125,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/rounded_background"
-
-
-        android:layout_gravity="center">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        >
 
         <!-- Row 1: Temperature and Humidity -->
         <LinearLayout
@@ -142,7 +142,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:layout_marginStart="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onTemperatureClick">
@@ -172,9 +173,9 @@
                     android:text="Temperature"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="14sp" />
-            </LinearLayout>
-
                 </LinearLayout>
+
+            </LinearLayout>
 
             <!-- Humidity Button -->
             <LinearLayout
@@ -182,7 +183,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:layout_marginStart="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onHumidityClick">
@@ -221,7 +223,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:layout_marginTop="16dp">
+           >
 
             <!-- Lighting Button -->
             <LinearLayout
@@ -229,16 +231,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:layout_marginStart="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onLightingClick">
+
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_light" />
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -271,7 +274,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:layout_marginStart="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onEnergyConsumptionClick">
@@ -299,7 +303,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Power Consumtion"
+                    android:text="Power Usage"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="14sp" />
                     </LinearLayout>
@@ -309,6 +313,53 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+
+
+        <!-- Bottom Navigation -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:background="#40222222"
+            android:padding="8dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#40333333"
+                android:text="Home"
+                android:textColor="#FFFFFF"
+                android:layout_marginRight="15dp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#40333333"
+                android:text="Routines"
+                android:textColor="#FFFFFF"
+                android:layout_marginRight="15dp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#40333333"
+                android:text="Profile"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+
+
 </LinearLayout>
 
 
