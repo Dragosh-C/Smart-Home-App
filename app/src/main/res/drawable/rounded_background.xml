@@ -10,7 +10,7 @@
     <!-- Outer layer for the margin effect -->
     <item>
         <shape>
-            <solid android:color="#80B0B0C4" /> <!-- Margin color -->
+            <solid android:color="#20B0B0C4" /> <!-- Margin color -->
             <corners android:radius="22dp" /> <!-- Larger radius for margin -->
         </shape>
     </item>

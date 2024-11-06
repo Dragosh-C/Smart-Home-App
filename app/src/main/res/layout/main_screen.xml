@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1c1d23"
+    android:background="@drawable/background_gardient"
     android:orientation="vertical"
+    android:paddingTop="20dp"
     >
 
 
@@ -12,8 +14,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="#1c1d23">
-
+    >
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
         android:scaleType="fitCenter"
        />
 
-    <ImageButton
+        <ImageButton
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
@@ -44,16 +45,14 @@
         android:src="@drawable/ic_settings_1"
         android:scaleType="fitCenter"
        />
-</RelativeLayout>
-
-
+    </RelativeLayout>
 
 
         <!-- Room Tabs -->
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1c1d23"
+
             android:paddingVertical="8dp">
 
             <LinearLayout
@@ -67,26 +66,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="#333333"
+                    android:backgroundTint="#30333333"
                     android:text="All"
-                    android:textColor="#FFFFFF" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/button_circular_background"
-                    android:text="Dormitory"
                     android:textColor="#FFFFFF"
-
-
                     />
 
+<!--                <TextView-->
+<!--                    android:id="@+id/myTextViewButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/button_circular_background"-->
+<!--                    android:clickable="true"-->
+<!--                    android:contentDescription="Button to Click Me"-->
+<!--                    android:focusable="true"-->
+<!--                    android:gravity="center"-->
+<!--                    android:paddingLeft="16dp"-->
+<!--                    android:paddingTop="8dp"-->
+<!--                    android:paddingRight="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:text="Dormitory"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp" />-->
+
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="#6633FF"
+                    android:backgroundTint="#755DC3"
                     android:text="Living Room"
                     android:textColor="#FFFFFF" />
 
@@ -94,9 +101,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="#333333"
+                    android:backgroundTint="#30333333"
                     android:text="Kitchen"
                     android:textColor="#FFFFFF" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#30333333"
+                    android:text="Bathroom"
+                    android:textColor="#FFFFFF" />
+
             </LinearLayout>
         </HorizontalScrollView>
 
