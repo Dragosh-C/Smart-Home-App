@@ -74,6 +74,7 @@ package app.smarthomeapp
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -84,12 +85,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_screen)
 
-                    @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            @Suppress("DEPRECATION")
-            window.statusBarColor = android.graphics.Color.TRANSPARENT
-
+//                    @Suppress("DEPRECATION")
+//            window.decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//            @Suppress("DEPRECATION")
+//            window.statusBarColor = android.graphics.Color.TRANSPARENT
+        enableEdgeToEdge()
         // Set background gradient
         val mainLayout = findViewById<android.widget.LinearLayout>(R.id.main_layout)
         val gradientDrawable = resources.getDrawable(R.drawable.background_gardient) as GradientDrawable
