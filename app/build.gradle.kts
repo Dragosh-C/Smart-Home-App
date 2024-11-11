@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "app.smarthomeapp"
-        minSdk = 24
+        minSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -50,7 +50,22 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(platform(libs.firebase.bom))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.google.firebase.auth)
+
+    // Also add the dependency for the Google Play services library and specify its version
+    implementation(libs.play.services.auth)
+
+    implementation(libs.androidx.credentials)
+
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    implementation(libs.androidx.credentials.play.services.auth)
 }

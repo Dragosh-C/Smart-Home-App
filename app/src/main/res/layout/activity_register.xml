@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register">
+    tools:context=".sign_in.Register">
 
 
     <LinearLayout
@@ -29,6 +29,7 @@
                 android:textSize="24sp"
                 android:textColor="#FFFFFF"
                 android:paddingEnd="4dp"
+                android:layout_marginTop="10dp"
                 />
 
             <TextView
@@ -42,6 +43,7 @@
                 android:paddingBottom="32dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-medium" />
 
         </LinearLayout>
@@ -104,6 +106,7 @@
 
         <!-- Sign up with Google button -->
         <LinearLayout
+            android:id="@+id/google_sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
