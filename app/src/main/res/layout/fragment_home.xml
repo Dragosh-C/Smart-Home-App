@@ -122,6 +122,17 @@
     </HorizontalScrollView>
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+    >
 
     <!-- Container with rounded corners and semi-transparent background -->
     <LinearLayout
@@ -423,27 +434,82 @@
 
 
 
-    <LinearLayout
+<!--    <LinearLayout-->
 
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="16dp">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/add_widget_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Add Widget" />-->
+
+<!--        <GridLayout-->
+<!--            android:id="@+id/grid_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:columnCount="2"-->
+<!--            android:padding="8dp"-->
+<!--            android:layout_marginTop="16dp"/>-->
+<!--    </LinearLayout>-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
 
-        <Button
-            android:id="@+id/add_widget_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Widget" />
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
 
-        <GridLayout
-            android:id="@+id/grid_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+        >
+
+        <LinearLayout android:id="@+id/add_widget_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:focusable="true">
+
+        <!-- Small + icon -->
+        <ImageView
+            android:id="@+id/add_widget_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/ic_plus_sign"
+            android:contentDescription="Add icon"
+            android:layout_marginEnd="2dp" />
+
+        <!-- Text for "Add" -->
+            <TextView
+                android:id="@+id/add_widget_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:textColor="#adadad"
+
+
+                android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- GridLayout to contain dynamic widgets -->
+    <GridLayout
+        android:id="@+id/grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:padding="8dp"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
 
     </LinearLayout>
