@@ -6,6 +6,7 @@
     android:padding="20dp"
     android:background="#801c1d23">
 
+
     <!-- Input for widget name -->
     <EditText
         android:id="@+id/name_input"
@@ -66,5 +67,19 @@
         android:layout_gravity="center"
         android:padding="15dp"
         android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/modify_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modify Widgets"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_background"
+        android:textSize="18sp"
+
+        android:padding="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
+        />
 
 </LinearLayout>

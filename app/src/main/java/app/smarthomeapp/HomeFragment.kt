@@ -28,22 +28,22 @@ data class Widget(
 class HomeFragment : Fragment() {
 
     private lateinit var gridLayout: GridLayout
-//    private val database = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/")
-//    private val widgetsRef = database.getReference("widgets")
+    private lateinit var editButton: Button
     private val widgetViews = mutableMapOf<String, SwitchCompat>()
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private var isEditMode = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         gridLayout = view.findViewById(R.id.grid_layout)
+        editButton = view.findViewById(R.id.exit_edit_mode_button)
 
         val addButton = view.findViewById<LinearLayout>(R.id.add_widget_button)
         addButton.setOnClickListener {
@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    private fun showDataSelectionDialog() {
+    private fun showDataSelectionDialog(existingWidget: Widget? = null) {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_select_data)
 
@@ -64,6 +64,8 @@ class HomeFragment : Fragment() {
         val portSpinner = dialog.findViewById<Spinner>(R.id.port_spinner)
         val typeSpinner = dialog.findViewById<Spinner>(R.id.type_spinner)
         val saveButton = dialog.findViewById<Button>(R.id.save_button)
+        val modifyButton = dialog.findViewById<Button>(R.id.modify_button)
+
 
         val portOptions = (1..9).map { "Port $it" }
         val portAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, portOptions)
@@ -75,16 +77,42 @@ class HomeFragment : Fragment() {
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         typeSpinner.adapter = typeAdapter
 
+        existingWidget?.let {
+            nameInput.setText(it.name)
+            portSpinner.setSelection(portOptions.indexOf(it.port))
+            typeSpinner.setSelection(typeOptions.indexOf(it.type))
+        }
+
         saveButton.setOnClickListener {
             val widgetName = nameInput.text.toString()
             val selectedPort = portSpinner.selectedItem.toString()
             val selectedType = typeSpinner.selectedItem.toString()
 
             if (widgetName.isNotBlank()) {
-                addNewWidget(widgetName, selectedPort, selectedType)
+                if (existingWidget == null) {
+                    addNewWidget(widgetName, selectedPort, selectedType)
+                } else {
+                    updateWidget(existingWidget.copy(name = widgetName, port = selectedPort, type = selectedType))
+                }
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "Please enter a name", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        modifyButton.setOnClickListener {
+            toggleEditMode()
+            dialog.dismiss()
+            if (isEditMode) {
+
+                editButton.visibility = View.VISIBLE
+                editButton.setOnClickListener {
+                    toggleEditMode()
+                    editButton.visibility = View.GONE
+                }
+
+
+
             }
         }
 
@@ -97,13 +125,21 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    private fun toggleEditMode() {
+        isEditMode = !isEditMode
+        gridLayout.removeAllViews()
+        loadWidgetsFromFirebase()
+    }
+
     private fun addNewWidget(name: String, port: String, type: String) {
         val widget = Widget(name, port, type, false)
-//        widgetsRef.child(name).setValue(widget)
 
-        //
+        // verify if the widget already exists
+        if (widgetViews.containsKey(widget.name)) {
+            Toast.makeText(requireContext(), "Widget with this name already exists", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        // add the widget to the curent user
 
         db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(name).set(widget)
             .addOnSuccessListener {
@@ -114,6 +150,19 @@ class HomeFragment : Fragment() {
             }
 
         addWidgetToGridLayout(widget)
+    }
+
+    private fun updateWidget(widget: Widget) {
+        db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name).set(widget)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Widget updated", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to update widget", Toast.LENGTH_SHORT).show()
+            }
+
+        gridLayout.removeAllViews()
+        loadWidgetsFromFirebase()
     }
 
     private fun addWidgetToGridLayout(widget: Widget) {
@@ -174,22 +223,18 @@ class HomeFragment : Fragment() {
         val toggle = SwitchCompat(requireContext()).apply {
             isChecked = widget.isEnabled
             tag = widget.name // Use the widget's name as a unique identifier
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { topMargin = 8 }
-            thumbTintList = ContextCompat.getColorStateList(requireContext(), androidx.cardview.R.color.cardview_dark_background)
-            trackTintList = ContextCompat.getColorStateList(requireContext(), R.color.bottom_nav_item_color)
-            setPadding(10, 20, 0, 20)
+            setOnCheckedChangeListener { _, newCheckedState ->
+                db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name)
+                    .update("isEnabled", newCheckedState)
+                    .addOnSuccessListener {
+                        Log.d("Widget", "Widget state updated: ${widget.name} = $newCheckedState")
+                    }
 
-//            setOnCheckedChangeListener { buttonView, isChecked ->
-//                val widgetName = buttonView.tag as String
-////                widgetsRef.child(widgetName).child("isEnabled").setValue(isChecked)
-//            }
+                widget.isEnabled = newCheckedState
+            }
         }
 
-        widgetViews[widget.name] = toggle // Store toggle reference by name
-
+        widgetViews[widget.name] = toggle
         textLayout.addView(portText)
         textLayout.addView(typeText)
         textLayout.addView(toggle)
@@ -207,7 +252,6 @@ class HomeFragment : Fragment() {
                 marginStart = 26
                 gravity = Gravity.CENTER_VERTICAL
             }
-
             clipToOutline = true
             outlineProvider = ViewOutlineProvider.BACKGROUND
         }
@@ -215,52 +259,39 @@ class HomeFragment : Fragment() {
         iconAndTextLayout.addView(textLayout)
         iconAndTextLayout.addView(icon)
 
+        if (isEditMode) {
+            val deleteButton = Button(requireContext()).apply {
+                text = "X"
+                setOnClickListener {
+                    db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name).delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Widget deleted", Toast.LENGTH_SHORT).show()
+                            gridLayout.removeView(cardView)
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Failed to delete widget", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+            innerLayout.addView(deleteButton)
+
+
+        }
+
         innerLayout.addView(title)
         innerLayout.addView(iconAndTextLayout)
-
         cardView.addView(innerLayout)
         gridLayout.addView(cardView)
     }
 
     private fun loadWidgetsFromFirebase() {
-
         db.collection("users").document(auth.currentUser!!.uid).collection("widgets").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val widget = document.toObject(Widget::class.java)
                     addWidgetToGridLayout(widget)
-                    modifyOnChangeWidget(widget)
                 }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Failed to load widgets: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+
     }
-
-
-    // TO DO: Also implement update realtime database when Changing the state (or only update RT database)
-    private fun modifyOnChangeWidget(widget: Widget) {
-        val toggle = widgetViews[widget.name] ?: return
-
-
-        toggle.setOnCheckedChangeListener(null)
-        toggle.isChecked = widget.isEnabled
-
-        // Re-attach the listener to handle state changes
-        toggle.setOnCheckedChangeListener { _, newCheckedState ->
-            // Update the widget's isEnabled field in Firebase when toggled
-            db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name)
-                .update("isEnabled", newCheckedState)
-                .addOnSuccessListener {
-
-                    Log.d("Widget", "Widget state updated in Firebase: ${widget.name} = $newCheckedState")
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(requireContext(), "Failed to update widget state: ${exception.message}", Toast.LENGTH_SHORT).show()
-                }
-            widget.isEnabled = newCheckedState
-        }
-    }
-
-
 }
