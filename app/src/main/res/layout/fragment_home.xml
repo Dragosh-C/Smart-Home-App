@@ -62,44 +62,45 @@
         android:paddingVertical="8dp">
 
         <LinearLayout
+            android:id="@+id/room_tabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#30333333"
-                android:text="All"
-                android:textColor="#FFFFFF"
-                />
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:backgroundTint="#30333333"-->
+<!--                android:text="All"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                />-->
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#755DC3"
-                android:text="Living Room"
-                android:textColor="#FFFFFF" />
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:backgroundTint="#755DC3"-->
+<!--                android:text="Living Room"-->
+<!--                android:textColor="#FFFFFF" />-->
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#30333333"
-                android:text="Kitchen"
-                android:textColor="#FFFFFF" />
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:backgroundTint="#30333333"-->
+<!--                android:text="Kitchen"-->
+<!--                android:textColor="#FFFFFF" />-->
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#30333333"
-                android:text="Bathroom"
-                android:textColor="#FFFFFF" />
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:backgroundTint="#30333333"-->
+<!--                android:text="Bathroom"-->
+<!--                android:textColor="#FFFFFF" />-->
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -313,131 +314,6 @@
         </LinearLayout>
     </LinearLayout>
 
-
-
-<!--    <GridLayout-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:columnCount="2"-->
-<!--        android:padding="16dp"-->
-
-<!--        android:layout_margin="8dp">-->
-
-<!--        &lt;!&ndash; Card 1: Robot Vacuum &ndash;&gt;-->
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="8dp"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:backgroundTint="@android:color/transparent"-->
-<!--            app:cardCornerRadius="16dp">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="16dp"-->
-<!--                android:background="#DFFF00">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Робот-пылесос"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColor="@android:color/black" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Гостиная"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:textColor="@android:color/darker_gray" />-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="48dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    android:src="@drawable/ic_home_2"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:layout_marginTop="8dp" />-->
-
-<!--                <Switch-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:layout_marginTop="8dp" />-->
-<!--            </LinearLayout>-->
-<!--        </androidx.cardview.widget.CardView>-->
-
-<!--        &lt;!&ndash; Card 2: Lighting &ndash;&gt;-->
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="8dp"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:backgroundTint="@android:color/transparent"-->
-<!--            app:cardCornerRadius="16dp">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="16dp"-->
-<!--                android:background="#DFFF00">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Освещение"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColor="@android:color/black" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Гостиная"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:textColor="@android:color/darker_gray" />-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="48dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    android:src="@drawable/ic_smart_house"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:layout_marginTop="8dp" />-->
-
-<!--                <Switch-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:layout_marginTop="8dp" />-->
-<!--            </LinearLayout>-->
-<!--        </androidx.cardview.widget.CardView>-->
-
-
-
-
-<!--    <LinearLayout-->
-
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="16dp">-->
-
-<!--        <Button-->
-<!--            android:id="@+id/add_widget_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Add Widget" />-->
-
-<!--        <GridLayout-->
-<!--            android:id="@+id/grid_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:columnCount="2"-->
-<!--            android:padding="8dp"-->
-<!--            android:layout_marginTop="16dp"/>-->
-<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
