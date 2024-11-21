@@ -116,6 +116,11 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(ProfileFragment())
                     true
                 }
+
+                R.id.nav_camera -> {
+                    loadFragment(CameraFragment())
+                    true
+                }
                 else -> false
             }
         }

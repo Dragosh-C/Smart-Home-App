@@ -1,39 +1,25 @@
-////package app.smarthomeapp
-////
-////import android.os.Bundle
-////import android.view.LayoutInflater
-////import android.view.View
-////import android.view.ViewGroup
-////import androidx.fragment.app.Fragment
-////
-////class ScenariosFragment : Fragment() {
-////
-////    override fun onCreateView(
-////        inflater: LayoutInflater, container: ViewGroup?,
-////        savedInstanceState: Bundle?
-////    ): View? {
-////
-////        return inflater.inflate(R.layout.fragment_routines, container, false)
-////    }
-////}
-//
-
-
-
 package app.smarthomeapp
-
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import java.util.Calendar
+import android.widget.Button
+import android.widget.Switch
+import androidx.core.content.ContextCompat
+import com.google.android.material.switchmaterial.SwitchMaterial
+
 
 data class Widget2(
     val id: String = "",
@@ -51,48 +37,138 @@ class ScenariosFragment : Fragment() {
     private lateinit var widgetList: MutableList<Widget2>
     private var widgetListener: ListenerRegistration? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_routines, container, false)
 
-        // Initialize Firebase Auth and Firestore
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
 
-        // Initialize RecyclerView and Adapter
-        widgetsRecyclerView = view.findViewById(R.id.widgetsRecyclerView)
-        widgetsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        widgetList = mutableListOf()
-        widgetAdapter = WidgetAdapter(widgetList)
-        widgetsRecyclerView.adapter = widgetAdapter
 
-        // Retrieve and display widgets with real-time updates
-        fetchWidgets()
+//        // Initialize Firebase Auth and Firestore
+//        auth = FirebaseAuth.getInstance()
+//        db = FirebaseFirestore.getInstance()
+//
+//        // Initialize RecyclerView and Adapter
+//        widgetsRecyclerView = view.findViewById(R.id.widgetsRecyclerView)
+//        widgetsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        widgetList = mutableListOf()
+//        widgetAdapter = WidgetAdapter(widgetList)
+//        widgetsRecyclerView.adapter = widgetAdapter
+//
+//        // Retrieve and display widgets with real-time updates
+//        fetchWidgets()
+//
+//        // Set up save button to add a new widget
+//        val inputField = view.findViewById<EditText>(R.id.name_input)
+//        val button = view.findViewById<View>(R.id.save_button)
+//
+//        button.setOnClickListener {
+//            val name = inputField.text.toString()
+//            if (name.isNotEmpty()) {
+//                val newWidget = Widget2(
+//                    id = db.collection("users").document(auth.currentUser!!.uid)
+//                        .collection("widgets").document().id,
+//                    name = name,
+//                    color = "Green",  // You can add more input fields for these properties
+//                    size = 7
+//                )
+//                saveWidget(newWidget)
+//            } else {
+//                Toast.makeText(context, "Please enter a widget name", Toast.LENGTH_SHORT).show()
+//            }
+//        }
 
-        // Set up save button to add a new widget
-        val inputField = view.findViewById<EditText>(R.id.name_input)
-        val button = view.findViewById<View>(R.id.save_button)
+        val setAlarmButton = view.findViewById<View>(R.id.set_alarm_button)
 
-        button.setOnClickListener {
-            val name = inputField.text.toString()
-            if (name.isNotEmpty()) {
-                val newWidget = Widget2(
-                    id = db.collection("users").document(auth.currentUser!!.uid)
-                        .collection("widgets").document().id,
-                    name = name,
-                    color = "Green",  // You can add more input fields for these properties
-                    size = 7
-                )
-                saveWidget(newWidget)
-            } else {
-                Toast.makeText(context, "Please enter a widget name", Toast.LENGTH_SHORT).show()
-            }
+        setAlarmButton.setOnClickListener{
+
+            showTimePickerDialog()
         }
+
 
         return view
     }
+
+
+    private fun showTimePickerDialog() {
+
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.time_picker_dialog)
+        dialog.setTitle("Smart Home Alarm")
+
+        val timePicker: TimePicker = dialog.findViewById(R.id.timePicker)
+        val adaptiveLight: SwitchMaterial = dialog.findViewById(R.id.specialFunctionSwitch)
+        val saveButton: Button = dialog.findViewById(R.id.alarm_save_button)
+        timePicker.setIs24HourView(true)
+
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        timePicker.hour = currentHour
+        timePicker.minute = currentMinute
+
+        saveButton.setOnClickListener {
+            val selectedHour = timePicker.hour
+            val selectedMinute = timePicker.minute
+            val isAdaptiveLight = adaptiveLight.isChecked
+
+            // TO DO: Implement adapiptive light for alarm
+
+            setAlarm(selectedHour, selectedMinute)
+
+            dialog.dismiss()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background))
+
+        dialog.show()
+    }
+
+
+
+    private fun setAlarm(hour: Int, minute: Int) {
+
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minute)
+            putExtra(AlarmClock.EXTRA_MESSAGE, "Smart-Home Alarm")
+        }
+
+        val packageManager = requireContext().packageManager
+
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), "No compatible alarm app found!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Function to save a widget for the current user
     private fun saveWidget(widget: Widget2) {

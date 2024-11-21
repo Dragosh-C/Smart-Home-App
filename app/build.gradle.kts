@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,4 +75,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     // impor recyclerview
     implementation(libs.androidx.recyclerview)
+
+    implementation (libs.androidx.work.runtime)
+    implementation (libs.androidx.core.ktx.v1100)
 }

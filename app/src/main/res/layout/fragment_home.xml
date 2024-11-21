@@ -138,6 +138,7 @@
 
             <!-- Temperature Button -->
             <LinearLayout
+                android:id="@+id/temperature_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -179,6 +180,7 @@
 
             <!-- Humidity Button -->
             <LinearLayout
+                android:id="@+id/humidity_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -227,6 +229,7 @@
 
             <!-- Lighting Button -->
             <LinearLayout
+                android:id="@+id/lighting_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -270,6 +273,7 @@
 
             <!-- Energy Consumption Button -->
             <LinearLayout
+                android:id="@+id/power_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

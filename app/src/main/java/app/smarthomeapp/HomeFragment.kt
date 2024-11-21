@@ -1,17 +1,14 @@
 package app.smarthomeapp
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.res.ColorStateList
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
-import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.Display
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -60,12 +57,55 @@ class HomeFragment : Fragment() {
             showDataSelectionDialog()
         }
 
-        roomTabsLayout = view.findViewById<LinearLayout>(R.id.room_tabs)
-
+        roomTabsLayout = view.findViewById(R.id.room_tabs)
         addRoom = view.findViewById(R.id.add_button)
-
         addRoom.setOnClickListener {
             showAddButtonDialog()
+        }
+
+        val temperatureButton: LinearLayout = view.findViewById(R.id.temperature_button)
+        temperatureButton.setOnClickListener {
+
+            Toast.makeText(requireContext(), "Temperature button clicked", Toast.LENGTH_SHORT).show()
+            // new view with graphics
+            val intent = Intent(requireContext(), GraphicsActivity::class.java)
+            startActivity(intent)
+
+
+
+        }
+
+        val humidityButton: LinearLayout = view.findViewById(R.id.humidity_button)
+
+        humidityButton.setOnClickListener {
+
+            Toast.makeText(requireContext(), "Humidity button clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), GraphicsActivity::class.java)
+            startActivity(intent)
+
+            startActivity(intent)
+        }
+
+        val lightButton: LinearLayout = view.findViewById(R.id.lighting_button)
+
+        lightButton.setOnClickListener {
+
+            Toast.makeText(requireContext(), "Light button clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), GraphicsActivity::class.java)
+            startActivity(intent)
+
+            startActivity(intent)
+        }
+
+        val powerButton: LinearLayout = view.findViewById(R.id.power_button)
+
+        powerButton.setOnClickListener {
+            // Your logic here
+            Toast.makeText(requireContext(), "Power button clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), GraphicsActivity::class.java)
+            startActivity(intent)
+
+            startActivity(intent)
         }
 
         // Load widgets from Firebase when the view is created
@@ -73,6 +113,11 @@ class HomeFragment : Fragment() {
         loadButtonsFromFirebase()
 
         return view
+    }
+
+    fun onTemperatureClick(view: View) {
+        // Your logic here
+        Toast.makeText(requireContext(), "Temperature button clicked", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadButtonsFromFirebase() {
@@ -96,16 +141,13 @@ class HomeFragment : Fragment() {
         val saveButton = builder.findViewById<Button>(R.id.save_room_button)
 
         // set background color for the dialog
-
         val gradientDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            cornerRadius = 30f  // Adjust this for the rounded effect
-            setColor(Color.parseColor("#1c1d23")) // Default background color
+            cornerRadius = 30f
+            setColor(Color.parseColor("#1c1d23"))
         }
 
         builder.window?.setBackgroundDrawable(gradientDrawable)
-
-
 
         saveButton.setOnClickListener {
             val roomName = inputField.text.toString()
@@ -117,27 +159,18 @@ class HomeFragment : Fragment() {
             }
         }
 
-
-        // show the dialog
-
         val layoutParams = WindowManager.LayoutParams()
         layoutParams.copyFrom(builder.window?.attributes)
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
         builder.window?.attributes = layoutParams
-
         builder.show()
-
-
     }
 
-
-
     private fun addRoom(buttonName: String, isSelected: Boolean = false) {
-        // Create the rounded background drawable
         val roundedBackground = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            cornerRadius = 100f  // Adjust this for the rounded effect
+            cornerRadius = 100f
             if (isSelected) {
                 setColor(Color.parseColor("#8A67D1"))  // Selected color
             } else {
@@ -145,16 +178,15 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Create the button
         val button = Button(requireContext()).apply {
             text = buttonName
             setTextColor(Color.parseColor("#FFFFFF"))
-            background = roundedBackground  // Set the background to the drawable
+            background = roundedBackground
             layoutParams = GridLayout.LayoutParams().apply {
-                width = GridLayout.LayoutParams.WRAP_CONTENT  // Width is wrap_content, it adjusts to text size
+                width = GridLayout.LayoutParams.WRAP_CONTENT
                 height = 120  // Set fixed height to maintain consistency
-                setPadding(30, 0, 30, 0)  // Horizontal padding for consistent size
-                setMargins(10, 0, 20, 0)  // Margins around the button
+                setPadding(30, 0, 30, 0)
+                setMargins(10, 0, 20, 0)
             }
         }
 
@@ -164,7 +196,6 @@ class HomeFragment : Fragment() {
 
             (button.background as GradientDrawable).setColor(newColor)
 
-            // Save the new selection state to Firebase
             val roomData = mapOf(
                 "name" to buttonName,
                 "isSelected" to true
@@ -174,14 +205,14 @@ class HomeFragment : Fragment() {
                 .document(auth.currentUser!!.uid)
                 .collection("rooms")
                 .document(buttonName)
-                .set(roomData)  // Save only the name and isSelected status
+                .set(roomData)
 
-            // diselect all other buttons
+            // unselect all other buttons
             roomTabsLayout.children.forEach {
                 if (it is Button && it != button) {
                     (it.background as GradientDrawable).setColor(Color.parseColor("#30B0B0C4"))
-                    // disable the previos selected button from the database
-                    val roomData = mapOf(
+                    // disable the previous selected button from the database
+                    val roomsData = mapOf(
                         "name" to it.text.toString(),
                         "isSelected" to false
                     )
@@ -190,15 +221,12 @@ class HomeFragment : Fragment() {
                         .document(auth.currentUser!!.uid)
                         .collection("rooms")
                         .document(it.text.toString())
-                        .set(roomData)  // Save only the name and isSelected status
+                        .set(roomsData)
                 }
             }
-
-            // Load the widgets for the selected room
             gridLayout.removeAllViews()
             loadWidgetsFromFirebase()
         }
-        // Add the button to the layout
         roomTabsLayout.addView(button)
     }
 
@@ -211,8 +239,6 @@ class HomeFragment : Fragment() {
         val typeSpinner = dialog.findViewById<Spinner>(R.id.type_spinner)
         val saveButton = dialog.findViewById<Button>(R.id.save_button)
         val modifyButton = dialog.findViewById<Button>(R.id.modify_button)
-
-
         val portOptions = (1..9).map { "Port $it" }
         val portAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, portOptions)
         portAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -250,7 +276,6 @@ class HomeFragment : Fragment() {
             toggleEditMode()
             dialog.dismiss()
             if (isEditMode) {
-
                 editButton.visibility = View.VISIBLE
                 editButton.setOnClickListener {
                     toggleEditMode()
@@ -266,17 +291,14 @@ class HomeFragment : Fragment() {
         }
 
         val displayMetrics = DisplayMetrics()
-
-
         val windowMetrics = (context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).currentWindowMetrics
         val bounds = windowMetrics.bounds
+
         displayMetrics.widthPixels = bounds.width()
         displayMetrics.heightPixels = bounds.height()
 
         val screenWidth = displayMetrics.widthPixels
         val screenHeight = displayMetrics.heightPixels
-
-
         val halfScreenHeight = screenHeight / 1.5
 
         dialog.window?.setBackgroundDrawable(gradientDrawable)
@@ -299,25 +321,6 @@ class HomeFragment : Fragment() {
 
     private fun addNewWidget(name: String, port: String, type: String) {
         val widget = Widget(name, port, type, false)
-
-//        // verify if the widget already exists
-//        if (widgetViews.containsKey(widget.name)) {
-//            Toast.makeText(requireContext(), "Widget with this name already exists", Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//
-//
-//        db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(name).set(widget)
-//            .addOnSuccessListener {
-//                Toast.makeText(requireContext(), "Widget added to Firebase", Toast.LENGTH_SHORT).show()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(requireContext(), "Failed to add widget", Toast.LENGTH_SHORT).show()
-//            }
-//
-//        addWidgetToGridLayout(widget)
-            // add the widget to the database for the current user and current room
-
         db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -336,22 +339,9 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-
-
     }
 
     private fun updateWidget(widget: Widget) {
-//        db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name).set(widget)
-//            .addOnSuccessListener {
-//                Toast.makeText(requireContext(), "Widget updated", Toast.LENGTH_SHORT).show()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(requireContext(), "Failed to update widget", Toast.LENGTH_SHORT).show()
-//            }
-//
-//        gridLayout.removeAllViews()
-//        loadWidgetsFromFirebase()
-
         db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -472,13 +462,23 @@ class HomeFragment : Fragment() {
             val deleteButton = Button(requireContext()).apply {
                 text = "X"
                 setOnClickListener {
-                    db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name).delete()
-                        .addOnSuccessListener {
-                            Toast.makeText(requireContext(), "Widget deleted", Toast.LENGTH_SHORT).show()
-                            gridLayout.removeView(cardView)
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(requireContext(), "Failed to delete widget", Toast.LENGTH_SHORT).show()
+                    db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                val room = document.data
+                                val roomName = room["name"] as String
+                                val isSelected = room["isSelected"] as Boolean
+                                if (isSelected) {
+                                    db.collection("users").document(auth.currentUser!!.uid).collection("rooms").document(roomName).collection("widgets").document(widget.name).delete()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(requireContext(), "Widget deleted", Toast.LENGTH_SHORT).show()
+                                            gridLayout.removeView(cardView)
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(requireContext(), "Failed to delete widget", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
+                            }
                         }
                 }
             }
@@ -492,14 +492,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadWidgetsFromFirebase() {
-//        db.collection("users").document(auth.currentUser!!.uid).collection("widgets").get()
-//            .addOnSuccessListener { result ->
-//                for (document in result) {
-//                    val widget = document.toObject(Widget::class.java)
-//                    addWidgetToGridLayout(widget)
-//                }
-//            }
-
         db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -507,16 +499,16 @@ class HomeFragment : Fragment() {
                     val roomName = room["name"] as String
                     val isSelected = room["isSelected"] as Boolean
                     if (isSelected) {
-                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms").document(roomName).collection("widgets").get()
-                            .addOnSuccessListener { result ->
-                                for (document in result) {
-                                    val widget = document.toObject(Widget::class.java)
+                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms")
+                            .document(roomName).collection("widgets").get()
+                            .addOnSuccessListener { res ->
+                                for (doc in res) {
+                                    val widget = doc.toObject(Widget::class.java)
                                     addWidgetToGridLayout(widget)
                                 }
                             }
                     }
                 }
             }
-
     }
 }
