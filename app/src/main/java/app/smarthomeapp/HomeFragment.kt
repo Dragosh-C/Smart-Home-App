@@ -69,10 +69,9 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Temperature button clicked", Toast.LENGTH_SHORT).show()
             // new view with graphics
             val intent = Intent(requireContext(), GraphicsActivity::class.java)
+            intent.putExtra("metric", "Temperature")
+            intent.putExtra("timeRange", "Day")
             startActivity(intent)
-
-
-
         }
 
         val humidityButton: LinearLayout = view.findViewById(R.id.humidity_button)
@@ -81,8 +80,8 @@ class HomeFragment : Fragment() {
 
             Toast.makeText(requireContext(), "Humidity button clicked", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), GraphicsActivity::class.java)
-            startActivity(intent)
-
+            intent.putExtra("metric", "Humidity")
+            intent.putExtra("timeRange", "Day")
             startActivity(intent)
         }
 
@@ -92,8 +91,8 @@ class HomeFragment : Fragment() {
 
             Toast.makeText(requireContext(), "Light button clicked", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), GraphicsActivity::class.java)
-            startActivity(intent)
-
+            intent.putExtra("metric", "Luminosity")
+            intent.putExtra("timeRange", "Day")
             startActivity(intent)
         }
 
@@ -103,8 +102,8 @@ class HomeFragment : Fragment() {
             // Your logic here
             Toast.makeText(requireContext(), "Power button clicked", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), GraphicsActivity::class.java)
-            startActivity(intent)
-
+            intent.putExtra("metric", "Power Usage")
+            intent.putExtra("timeRange", "Day")
             startActivity(intent)
         }
 

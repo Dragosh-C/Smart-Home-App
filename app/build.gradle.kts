@@ -8,6 +8,9 @@ android {
     namespace = "app.smarthomeapp"
     compileSdk = 35
 
+
+
+
     defaultConfig {
         applicationId = "app.smarthomeapp"
         minSdk = 34
@@ -37,9 +40,16 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
+
+
+
+
 dependencies {
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -56,6 +66,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +89,6 @@ dependencies {
 
     implementation (libs.androidx.work.runtime)
     implementation (libs.androidx.core.ktx.v1100)
+
+    implementation (libs.mpandroidchart)
 }

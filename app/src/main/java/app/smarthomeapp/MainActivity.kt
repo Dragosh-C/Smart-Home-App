@@ -85,11 +85,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_screen)
 
-//                    @Suppress("DEPRECATION")
-//            window.decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//            @Suppress("DEPRECATION")
-//            window.statusBarColor = android.graphics.Color.TRANSPARENT
+
         enableEdgeToEdge()
         // Set background gradient
         val mainLayout = findViewById<android.widget.LinearLayout>(R.id.main_layout)
@@ -100,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         // BottomNavigationView
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.nav_home
-        loadFragment(HomeFragment()) // Show the Home fragment initially
+        loadFragment(HomeFragment())
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
