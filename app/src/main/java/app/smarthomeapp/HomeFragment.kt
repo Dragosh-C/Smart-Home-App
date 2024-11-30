@@ -56,8 +56,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-            return inflater.inflate(R.layout.fragment_home, container, false)
-        }
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,7 +87,8 @@ class HomeFragment : Fragment() {
         val temperatureButton: LinearLayout = view.findViewById(R.id.temperature_button)
         temperatureButton.setOnClickListener {
 
-            Toast.makeText(requireContext(), "Temperature button clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Temperature button clicked", Toast.LENGTH_SHORT)
+                .show()
             // new view with graphics
             val intent = Intent(requireContext(), GraphicsActivity::class.java)
             intent.putExtra("metric", "Temperature")
@@ -154,20 +155,87 @@ class HomeFragment : Fragment() {
     private fun listenToRealtimeUpdates(boxId: String, roomId: String) {
         // Only listen if this boxId matches the selected boxId
         if (selectedBoxId == boxId) {
-            val databaseReference = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+            val databaseReference =
+                FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
-            databaseReference.child("box_id").child(boxId).child("temperature").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val newTemperature = snapshot.getValue(Int::class.java) ?: 0
-                    // Update your UI with the new temperature value
-                    temperatureText.text = "$newTemperature °C"
-                    Log.d("RealtimeDatabase", "Temperature updated for selected boxId: $newTemperature")
-                }
+            databaseReference.child("box_id").child(boxId).child("temperature")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newTemperature = snapshot.getValue(Int::class.java) ?: 0
+                        // Update your UI with the new temperature value
+                        temperatureText.text = "$newTemperature °C"
+                        Log.d(
+                            "RealtimeDatabase",
+                            "Temperature updated for selected boxId: $newTemperature"
+                        )
+                    }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("RealtimeDatabase", "Error listening for temperature updates: ${error.message}")
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e(
+                            "RealtimeDatabase",
+                            "Error listening for temperature updates: ${error.message}"
+                        )
+                    }
+                })
+
+            // humidity
+
+            databaseReference.child("box_id").child(boxId).child("humidity")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newHumidity = snapshot.getValue(Int::class.java) ?: 0
+                        // Update your UI with the new humidity value
+                        humidityText.text = "$newHumidity %"
+                        Log.d(
+                            "RealtimeDatabase",
+                            "Humidity updated for selected boxId: $newHumidity"
+                        )
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e(
+                            "RealtimeDatabase",
+                            "Error listening for humidity updates: ${error.message}"
+                        )
+                    }
+                })
+
+            // light
+            databaseReference.child("box_id").child(boxId).child("light")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newLight = snapshot.getValue(Int::class.java) ?: 0
+                        // Update your UI with the new light value
+                        lightText.text = "$newLight Lux"
+                        Log.d("RealtimeDatabase", "Light updated for selected boxId: $newLight")
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e(
+                            "RealtimeDatabase",
+                            "Error listening for light updates: ${error.message}"
+                        )
+                    }
+                })
+
+            // power
+            databaseReference.child("box_id").child(boxId).child("power")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newPower = snapshot.getValue(Int::class.java) ?: 0
+                        // Update your UI with the new power value
+                        powerText.text = "$newPower W"
+                        Log.d("RealtimeDatabase", "Power updated for selected boxId: $newPower")
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e(
+                            "RealtimeDatabase",
+                            "Error listening for power updates: ${error.message}"
+                        )
+                    }
+                })
+
         } else {
             Log.d("RealtimeDatabase", "Skipping update for non-selected room (boxId: $boxId).")
         }
@@ -177,7 +245,8 @@ class HomeFragment : Fragment() {
         val builder = Dialog(requireContext())
         builder.setContentView(R.layout.dialog_add_room)
 
-        val roomNameInputField = builder.findViewById<EditText>(R.id.add_room_input)  // For room name
+        val roomNameInputField =
+            builder.findViewById<EditText>(R.id.add_room_input)  // For room name
         val boxIdInputField = builder.findViewById<EditText>(R.id.add_box_id_input)  // For box ID
         val saveButton = builder.findViewById<Button>(R.id.save_room_button)
 
@@ -198,7 +267,11 @@ class HomeFragment : Fragment() {
                 addRoom(roomName, boxId)  // Pass both room name and box ID to addRoom
                 builder.dismiss()
             } else {
-                Toast.makeText(requireContext(), "Please enter both room name and box ID", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter both room name and box ID",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -269,7 +342,6 @@ class HomeFragment : Fragment() {
                         .update("isSelected", false)
                 }
             }
-
             // Clear the grid and reload widgets for the newly selected room
             gridLayout.removeAllViews()
             loadWidgetsFromFirebase()
@@ -290,12 +362,14 @@ class HomeFragment : Fragment() {
         val saveButton = dialog.findViewById<Button>(R.id.save_button)
         val modifyButton = dialog.findViewById<Button>(R.id.modify_button)
         val portOptions = (1..9).map { "Port $it" }
-        val portAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, portOptions)
+        val portAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, portOptions)
         portAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         portSpinner.adapter = portAdapter
 
         val typeOptions = listOf("Outlet", "Light", "Dimmer")
-        val typeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, typeOptions)
+        val typeAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, typeOptions)
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         typeSpinner.adapter = typeAdapter
 
@@ -314,7 +388,13 @@ class HomeFragment : Fragment() {
                 if (existingWidget == null) {
                     addNewWidget(widgetName, selectedPort, selectedType)
                 } else {
-                    updateWidget(existingWidget.copy(name = widgetName, port = selectedPort, type = selectedType))
+                    updateWidget(
+                        existingWidget.copy(
+                            name = widgetName,
+                            port = selectedPort,
+                            type = selectedType
+                        )
+                    )
                 }
                 dialog.dismiss()
             } else {
@@ -341,7 +421,8 @@ class HomeFragment : Fragment() {
         }
 
         val displayMetrics = DisplayMetrics()
-        val windowMetrics = (context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).currentWindowMetrics
+        val windowMetrics =
+            (context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager).currentWindowMetrics
         val bounds = windowMetrics.bounds
 
         displayMetrics.widthPixels = bounds.width()
@@ -378,12 +459,21 @@ class HomeFragment : Fragment() {
                     val roomName = room["name"] as String
                     val isSelected = room["isSelected"] as Boolean
                     if (isSelected) {
-                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms").document(roomName).collection("widgets").document(name).set(widget)
+                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms")
+                            .document(roomName).collection("widgets").document(name).set(widget)
                             .addOnSuccessListener {
-                                Toast.makeText(requireContext(), "Widget added to Firebase", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Widget added to Firebase",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             .addOnFailureListener {
-                                Toast.makeText(requireContext(), "Failed to add widget", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Failed to add widget",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         addWidgetToGridLayout(widget)
                     }
@@ -399,12 +489,22 @@ class HomeFragment : Fragment() {
                     val roomName = room["name"] as String
                     val isSelected = room["isSelected"] as Boolean
                     if (isSelected) {
-                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms").document(roomName).collection("widgets").document(widget.name).set(widget)
+                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms")
+                            .document(roomName).collection("widgets").document(widget.name)
+                            .set(widget)
                             .addOnSuccessListener {
-                                Toast.makeText(requireContext(), "Widget updated", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Widget updated",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             .addOnFailureListener {
-                                Toast.makeText(requireContext(), "Failed to update widget", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Failed to update widget",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         gridLayout.removeAllViews()
                         loadWidgetsFromFirebase()
@@ -472,7 +572,8 @@ class HomeFragment : Fragment() {
             isChecked = widget.isEnabled
             tag = widget.name // Use the widget's name as a unique identifier
             setOnCheckedChangeListener { _, newCheckedState ->
-                db.collection("users").document(auth.currentUser!!.uid).collection("widgets").document(widget.name)
+                db.collection("users").document(auth.currentUser!!.uid).collection("widgets")
+                    .document(widget.name)
                     .update("isEnabled", newCheckedState)
                     .addOnSuccessListener {
                         Log.d("Widget", "Widget state updated: ${widget.name} = $newCheckedState")
@@ -510,20 +611,31 @@ class HomeFragment : Fragment() {
             val deleteButton = Button(requireContext()).apply {
                 text = "X"
                 setOnClickListener {
-                    db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
+                    db.collection("users").document(auth.currentUser!!.uid).collection("rooms")
+                        .get()
                         .addOnSuccessListener { result ->
                             for (document in result) {
                                 val room = document.data
                                 val roomName = room["name"] as String
                                 val isSelected = room["isSelected"] as Boolean
                                 if (isSelected) {
-                                    db.collection("users").document(auth.currentUser!!.uid).collection("rooms").document(roomName).collection("widgets").document(widget.name).delete()
+                                    db.collection("users").document(auth.currentUser!!.uid)
+                                        .collection("rooms").document(roomName)
+                                        .collection("widgets").document(widget.name).delete()
                                         .addOnSuccessListener {
-                                            Toast.makeText(requireContext(), "Widget deleted", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Widget deleted",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                             gridLayout.removeView(cardView)
                                         }
                                         .addOnFailureListener {
-                                            Toast.makeText(requireContext(), "Failed to delete widget", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Failed to delete widget",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
                                 }
                             }
@@ -553,6 +665,32 @@ class HomeFragment : Fragment() {
                                 for (doc in res) {
                                     val widget = doc.toObject(Widget::class.java)
                                     addWidgetToGridLayout(widget)
+
+                                    // Listen for changes in the isEnabled status and update real-time database
+                                    val databaseReference =
+                                        FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+
+                                    // Handle the UI update when the button is toggled
+                                    widgetViews[widget.name]?.setOnCheckedChangeListener { _, isChecked ->
+                                        databaseReference.child("ports").child(widget.port)
+                                            .setValue(isChecked)
+                                    }
+
+                                    // Listen for changes from the database and update the button accordingly
+                                    val portRef =
+                                        databaseReference.child("ports").child(widget.port)
+                                    portRef.addValueEventListener(object : ValueEventListener {
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            // Check the value in the database and update the UI
+                                            val isEnabled =
+                                                snapshot.getValue(Boolean::class.java) ?: false
+                                            widgetViews[widget.name]?.isChecked = isEnabled
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+
+                                        }
+                                    })
                                 }
                             }
                     }
