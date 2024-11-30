@@ -22,6 +22,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Widget(
@@ -41,14 +45,31 @@ class HomeFragment : Fragment() {
     private var isEditMode = false
     private lateinit var addRoom: ImageButton
     private lateinit var roomTabsLayout: LinearLayout
+
+    private lateinit var temperatureText: TextView
+    private lateinit var humidityText: TextView
+    private lateinit var lightText: TextView
+    private lateinit var powerText: TextView
+    private lateinit var airQualityText: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+            return inflater.inflate(R.layout.fragment_home, container, false)
+        }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        temperatureText = view.findViewById(R.id.temperature_text)
+        humidityText = view.findViewById(R.id.humidity_text)
+        lightText = view.findViewById(R.id.lighting_text)
+        powerText = view.findViewById(R.id.power_text)
+
         gridLayout = view.findViewById(R.id.grid_layout)
         editButton = view.findViewById(R.id.exit_edit_mode_button)
 
@@ -110,13 +131,6 @@ class HomeFragment : Fragment() {
         // Load widgets from Firebase when the view is created
         loadWidgetsFromFirebase()
         loadButtonsFromFirebase()
-
-        return view
-    }
-
-    fun onTemperatureClick(view: View) {
-        // Your logic here
-        Toast.makeText(requireContext(), "Temperature button clicked", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadButtonsFromFirebase() {
@@ -127,34 +141,64 @@ class HomeFragment : Fragment() {
                     val room = document.data
                     val roomName = room["name"] as String
                     val isSelected = room["isSelected"] as Boolean
-                    addRoom(roomName, isSelected)
+
+                    // read the box_id from the database
+                    val boxId = room["box_id"] as String
+                    addRoom(roomName, boxId, isSelected)
                 }
             }
     }
 
+    private var selectedBoxId: String? = null  // Store selected room's box_id
+
+    private fun listenToRealtimeUpdates(boxId: String, roomId: String) {
+        // Only listen if this boxId matches the selected boxId
+        if (selectedBoxId == boxId) {
+            val databaseReference = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+
+            databaseReference.child("box_id").child(boxId).child("temperature").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val newTemperature = snapshot.getValue(Int::class.java) ?: 0
+                    // Update your UI with the new temperature value
+                    temperatureText.text = "$newTemperature °C"
+                    Log.d("RealtimeDatabase", "Temperature updated for selected boxId: $newTemperature")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("RealtimeDatabase", "Error listening for temperature updates: ${error.message}")
+                }
+            })
+        } else {
+            Log.d("RealtimeDatabase", "Skipping update for non-selected room (boxId: $boxId).")
+        }
+    }
 
     private fun showAddButtonDialog() {
         val builder = Dialog(requireContext())
         builder.setContentView(R.layout.dialog_add_room)
-        val inputField = builder.findViewById<EditText>(R.id.add_room_input)
+
+        val roomNameInputField = builder.findViewById<EditText>(R.id.add_room_input)  // For room name
+        val boxIdInputField = builder.findViewById<EditText>(R.id.add_box_id_input)  // For box ID
         val saveButton = builder.findViewById<Button>(R.id.save_room_button)
 
-        // set background color for the dialog
+        // Set background color for the dialog
         val gradientDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = 30f
             setColor(Color.parseColor("#1c1d23"))
         }
-
         builder.window?.setBackgroundDrawable(gradientDrawable)
 
         saveButton.setOnClickListener {
-            val roomName = inputField.text.toString()
-            if (roomName.isNotBlank()) {
-                addRoom(roomName)
+            val roomName = roomNameInputField.text.toString()
+            val boxId = boxIdInputField.text.toString()
+
+            // Check if both fields are not blank
+            if (roomName.isNotBlank() && boxId.isNotBlank()) {
+                addRoom(roomName, boxId)  // Pass both room name and box ID to addRoom
                 builder.dismiss()
             } else {
-                Toast.makeText(requireContext(), "Please enter a name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter both room name and box ID", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -166,12 +210,15 @@ class HomeFragment : Fragment() {
         builder.show()
     }
 
-    private fun addRoom(buttonName: String, isSelected: Boolean = false) {
+    private fun addRoom(buttonName: String, boxId: String, isSelected: Boolean = false) {
         val roundedBackground = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = 100f
             if (isSelected) {
+
                 setColor(Color.parseColor("#8A67D1"))  // Selected color
+                selectedBoxId = boxId  // Store the selected room's box_id
+                listenToRealtimeUpdates(boxId, buttonName)
             } else {
                 setColor(Color.parseColor("#30B0B0C4")) // Default background color
             }
@@ -190,43 +237,47 @@ class HomeFragment : Fragment() {
         }
 
         button.setOnClickListener {
-
             val newColor = Color.parseColor("#8A67D1")  // Selected color
-
             (button.background as GradientDrawable).setColor(newColor)
 
-            val roomData = mapOf(
+            // Mark the current room as selected in Firebase
+            val selectedRoomData = mapOf(
                 "name" to buttonName,
+                "box_id" to boxId,  // Keep its unique box_id
                 "isSelected" to true
             )
+            selectedBoxId = boxId  // Store selected room's box_id
+            listenToRealtimeUpdates(boxId, buttonName)
 
             db.collection("users")
                 .document(auth.currentUser!!.uid)
                 .collection("rooms")
                 .document(buttonName)
-                .set(roomData)
+                .set(selectedRoomData)
 
-            // unselect all other buttons
+            // Unselect all other buttons in the UI and update only their isSelected status
             roomTabsLayout.children.forEach {
                 if (it is Button && it != button) {
                     (it.background as GradientDrawable).setColor(Color.parseColor("#30B0B0C4"))
-                    // disable the previous selected button from the database
-                    val roomsData = mapOf(
-                        "name" to it.text.toString(),
-                        "isSelected" to false
-                    )
 
+                    // Update the "isSelected" status in Firebase, but keep their original box_id
+                    val otherRoomName = it.text.toString()
                     db.collection("users")
                         .document(auth.currentUser!!.uid)
                         .collection("rooms")
-                        .document(it.text.toString())
-                        .set(roomsData)
+                        .document(otherRoomName)
+                        .update("isSelected", false)
                 }
             }
+
+            // Clear the grid and reload widgets for the newly selected room
             gridLayout.removeAllViews()
             loadWidgetsFromFirebase()
         }
+
         roomTabsLayout.addView(button)
+        // Listen for real-time updates for the selected room
+
     }
 
     private fun showDataSelectionDialog(existingWidget: Widget? = null) {
@@ -360,8 +411,6 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-
-
     }
 
     private fun addWidgetToGridLayout(widget: Widget) {

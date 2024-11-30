@@ -162,6 +162,7 @@
 
 
                     <TextView
+                        android:id="@+id/temperature_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="23°C"
@@ -203,6 +204,7 @@
                     android:padding="8dp"
                     >
                     <TextView
+                        android:id="@+id/humidity_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="70%"
@@ -253,6 +255,7 @@
                     android:padding="8dp"
                     >
                     <TextView
+                        android:id="@+id/lighting_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="60%"
@@ -298,6 +301,7 @@
                     android:padding="8dp"
                     >
                     <TextView
+                        android:id="@+id/power_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="256K"

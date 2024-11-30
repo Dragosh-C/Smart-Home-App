@@ -263,6 +263,8 @@ class GraphicsActivity : AppCompatActivity() {
         lineChart.axisRight.isEnabled = false
         lineChart.description.isEnabled = false
         lineChart.legend.isEnabled = false
+        // animate chart
+        lineChart.animateY(500)
         lineChart.invalidate()
     }
 }
