@@ -44,50 +44,11 @@ class ScenariosFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_routines, container, false)
 
-
-
-//        // Initialize Firebase Auth and Firestore
-//        auth = FirebaseAuth.getInstance()
-//        db = FirebaseFirestore.getInstance()
-//
-//        // Initialize RecyclerView and Adapter
-//        widgetsRecyclerView = view.findViewById(R.id.widgetsRecyclerView)
-//        widgetsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        widgetList = mutableListOf()
-//        widgetAdapter = WidgetAdapter(widgetList)
-//        widgetsRecyclerView.adapter = widgetAdapter
-//
-//        // Retrieve and display widgets with real-time updates
-//        fetchWidgets()
-//
-//        // Set up save button to add a new widget
-//        val inputField = view.findViewById<EditText>(R.id.name_input)
-//        val button = view.findViewById<View>(R.id.save_button)
-//
-//        button.setOnClickListener {
-//            val name = inputField.text.toString()
-//            if (name.isNotEmpty()) {
-//                val newWidget = Widget2(
-//                    id = db.collection("users").document(auth.currentUser!!.uid)
-//                        .collection("widgets").document().id,
-//                    name = name,
-//                    color = "Green",  // You can add more input fields for these properties
-//                    size = 7
-//                )
-//                saveWidget(newWidget)
-//            } else {
-//                Toast.makeText(context, "Please enter a widget name", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
         val setAlarmButton = view.findViewById<View>(R.id.set_alarm_button)
 
         setAlarmButton.setOnClickListener{
-
             showTimePickerDialog()
         }
-
-
         return view
     }
 
