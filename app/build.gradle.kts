@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.core)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.foundation.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -91,4 +93,5 @@ dependencies {
     implementation (libs.androidx.core.ktx.v1100)
 
     implementation (libs.mpandroidchart)
+
 }
