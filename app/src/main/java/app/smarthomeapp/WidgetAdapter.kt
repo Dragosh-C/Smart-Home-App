@@ -5,6 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+data class Widget2(
+    val id: String = "",
+    val name: String = "",
+    val color: String = "",
+    val size: Int = 0
+)
 class WidgetAdapter(private val widgetList: List<Widget2>) : RecyclerView.Adapter<WidgetAdapter.WidgetViewHolder>() {
 
     // ViewHolder to hold the view for each item

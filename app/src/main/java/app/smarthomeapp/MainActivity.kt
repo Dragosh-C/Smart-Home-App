@@ -1,5 +1,7 @@
 package app.smarthomeapp
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -10,11 +12,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_screen)
 
-
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         enableEdgeToEdge()
         // Set background gradient
         val mainLayout = findViewById<android.widget.LinearLayout>(R.id.main_layout)

@@ -2,6 +2,8 @@ package app.smarthomeapp.mainpage
 
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -15,6 +17,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import app.smarthomeapp.GraphicsActivity
 import app.smarthomeapp.R
+import app.smarthomeapp.SettingsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -96,6 +99,11 @@ class HomeFragment : Fragment() {
         addRoom = view.findViewById(R.id.add_button)
         addRoom.setOnClickListener {
             showAddButtonDialog()
+        }
+        val settingsButton: ImageButton = view.findViewById(R.id.settings_button_home)
+        settingsButton.setOnClickListener {
+            val intent = Intent(requireContext(), SettingsActivity::class.java)
+            startActivity(intent)
         }
 
         val temperatureButton: LinearLayout = view.findViewById(R.id.temperature_button)

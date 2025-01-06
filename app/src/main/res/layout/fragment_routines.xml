@@ -3,32 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    >
 
-<!--    <EditText-->
-<!--        android:id="@+id/name_input"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Enter Widget Name"-->
-<!--        android:inputType="text"-->
-<!--        android:padding="15dp"-->
-<!--        android:textColor="#000000"-->
-<!--        android:textSize="16sp"-->
-<!--        android:layout_marginBottom="16dp"/>-->
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        >
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Routines"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
 
-<!--    <Button-->
-<!--        android:id="@+id/save_button"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Save"-->
-<!--        android:textSize="16sp"-->
-<!--        android:layout_marginBottom="16dp"/>-->
+        <ImageButton
+            android:id="@+id/add_button_routines"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_plus_sign"
+            android:scaleType="fitCenter"
+            />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/widgetsRecyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:clipToPadding="false" />-->
+        <ImageButton
+            android:id="@+id/settings_button_routines"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="44dp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_settings_1"
+            android:scaleType="fitCenter"
+            />
+    </RelativeLayout>
+
 
 
     <Button
@@ -38,6 +53,7 @@
         android:text="Set Alarm"
         android:textSize="16sp"
         android:layout_marginBottom="16dp"/>
+
 
 
 </LinearLayout>
