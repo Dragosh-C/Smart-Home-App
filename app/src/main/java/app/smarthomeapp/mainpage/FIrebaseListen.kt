@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
-import app.smarthomeapp.notifications.Notifications
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -92,24 +91,14 @@ class RealtimeDatabaseListener(context: Context) {
 
                          if (airQuality in 50..100) {
                              lightText.setTextColor(lightText.context.getColor(android.R.color.holo_orange_light))
-                             val notifications = Notifications(lightText.context)
-                             notifications.createNotificationChannel()
-                             notifications.sendNotification("Air Quality Alert", "Air quality is moderate. Consider opening the windows.")
                         }
 
                        else if (airQuality in 101 .. 300) {
                             lightText.setTextColor(lightText.context.getColor(android.R.color.holo_orange_dark))
-                            val notifications = Notifications(lightText.context)
-                            notifications.createNotificationChannel()
-                            notifications.sendNotification("Air Quality Alert", "The indoor air quality is unhealthy. Ensure proper ventilation or consider using an air purifier.")
-
                         }
 
                        else if (airQuality > 300) {
                             lightText.setTextColor(lightText.context.getColor(android.R.color.holo_red_dark))
-                            val notifications = Notifications(lightText.context)
-                            notifications.createNotificationChannel()
-                            notifications.sendNotification("Air Quality Alert", "The air quality is critically poor. This may indicate a fire or gas leak!")
                         }
                         else {
                             lightText.setTextColor(lightText.context.getColor(android.R.color.holo_green_light))
