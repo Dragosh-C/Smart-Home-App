@@ -15,7 +15,6 @@
         android:gravity="center_vertical"
         >
 
-        <!-- Back Button -->
         <ImageView
             android:id="@+id/back_button"
             android:layout_width="24dp"
@@ -24,7 +23,6 @@
             android:layout_marginEnd="16dp"
             app:tint="#FFFFFF" />
 
-        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +32,6 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -59,6 +56,7 @@
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
+                android:id="@+id/temperature_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -85,6 +83,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/luminosity_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -112,6 +111,7 @@
 
 
             <LinearLayout
+                android:id="@+id/humidity_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -139,6 +139,7 @@
 
 
             <LinearLayout
+                android:id="@+id/air_quality_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -165,6 +166,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/power_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -193,6 +195,7 @@
 
             <!-- Context Section -->
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Context"
@@ -201,6 +204,7 @@
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
+                android:id="@+id/wake_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -263,6 +267,7 @@
 
             <!-- Specific Time -->
             <LinearLayout
+                android:id="@+id/specific_time_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -299,6 +304,7 @@
 
             <!-- Specific Place -->
             <LinearLayout
+                android:id="@+id/specific_place_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -333,6 +339,7 @@
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
+                android:id="@+id/motion_detected_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

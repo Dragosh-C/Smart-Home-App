@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!-- Top Bar with Back Button and Title -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +15,6 @@
         android:gravity="center_vertical"
         >
 
-        <!-- Back Button -->
         <ImageView
             android:id="@+id/back_button"
             android:layout_width="24dp"
@@ -25,7 +23,6 @@
             android:layout_marginEnd="16dp"
             app:tint="#FFFFFF" />
 
-        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +32,6 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -60,6 +56,7 @@
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
+                android:id="@+id/relay_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

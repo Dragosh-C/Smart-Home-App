@@ -1,13 +1,13 @@
 package app.smarthomeapp
 
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import app.smarthomeapp.mainpage.HomeFragment
+import app.smarthomeapp.routinespage.ScenariosFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
