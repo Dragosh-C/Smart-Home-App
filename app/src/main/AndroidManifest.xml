@@ -61,11 +61,22 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
         </activity>
 
         <activity android:name=".GraphicsActivity" android:exported="false" />
         <activity android:name=".SettingsActivity" />
+
+
+        <service
+            android:name="app.smarthomeapp.notifications.MyFirebaseMessagingService"
+            android:exported="false"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
 
     </application>
 

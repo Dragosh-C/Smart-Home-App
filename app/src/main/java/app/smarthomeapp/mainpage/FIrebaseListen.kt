@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import app.smarthomeapp.notifications.Notifications
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -12,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
-class RealtimeDatabaseListener {
+class RealtimeDatabaseListener(context: Context) {
 
     fun listenToRealtimeUpdates(
         boxId: String,
@@ -66,12 +67,54 @@ class RealtimeDatabaseListener {
                 })
 
             // Light Listener
-            databaseReference.child("box_id").child(boxId).child("light")
+//            databaseReference.child("box_id").child(boxId).child("light")
+//                .addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        val newLight = snapshot.getValue(Int::class.java) ?: 0
+//                        lightText.text = "$newLight Lux"
+//                        Log.d("RealtimeDatabase", "Light updated for selected boxId: $newLight")
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        Log.e(
+//                            "RealtimeDatabase",
+//                            "Error listening for light updates: ${error.message}"
+//                        )
+//                    }
+//                })
+
+            databaseReference.child("box_id").child(boxId).child("air_quality")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val newLight = snapshot.getValue(Int::class.java) ?: 0
-                        lightText.text = "$newLight Lux"
-                        Log.d("RealtimeDatabase", "Light updated for selected boxId: $newLight")
+                        val airQuality = snapshot.getValue(Int::class.java) ?: 0
+                        lightText.text = "$airQuality AQI"
+                        Log.d("RealtimeDatabase", "AQI updated for selected boxId: $airQuality")
+
+                         if (airQuality in 50..100) {
+                             lightText.setTextColor(lightText.context.getColor(android.R.color.holo_orange_light))
+                             val notifications = Notifications(lightText.context)
+                             notifications.createNotificationChannel()
+                             notifications.sendNotification("Air Quality Alert", "Air quality is moderate. Consider opening the windows.")
+                        }
+
+                       else if (airQuality in 101 .. 300) {
+                            lightText.setTextColor(lightText.context.getColor(android.R.color.holo_orange_dark))
+                            val notifications = Notifications(lightText.context)
+                            notifications.createNotificationChannel()
+                            notifications.sendNotification("Air Quality Alert", "The indoor air quality is unhealthy. Ensure proper ventilation or consider using an air purifier.")
+
+                        }
+
+                       else if (airQuality > 300) {
+                            lightText.setTextColor(lightText.context.getColor(android.R.color.holo_red_dark))
+                            val notifications = Notifications(lightText.context)
+                            notifications.createNotificationChannel()
+                            notifications.sendNotification("Air Quality Alert", "The air quality is critically poor. This may indicate a fire or gas leak!")
+                        }
+                        else {
+                            lightText.setTextColor(lightText.context.getColor(android.R.color.holo_green_light))
+                        }
+
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -98,6 +141,7 @@ class RealtimeDatabaseListener {
                         )
                     }
                 })
+
 
         } else {
             Log.d("RealtimeDatabase", "Skipping update for non-selected room (boxId: $boxId).")

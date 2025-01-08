@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.foundation.android)
     implementation(libs.play.services.location)
+    implementation(libs.firebase.messaging.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -105,6 +107,16 @@ dependencies {
 
 
     implementation(libs.androidx.room.runtime)
+
+
+        // Retrofit library
+        implementation (libs.retrofit)
+
+        implementation (libs.converter.gson)
+
+        implementation (libs.logging.interceptor)
+
+
 
     ksp(libs.androidx.room.compiler)
 

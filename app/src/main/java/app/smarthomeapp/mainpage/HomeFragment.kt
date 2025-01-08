@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
         roomTabsLayout = view.findViewById(R.id.room_tabs)
         buttonListener(view)
 
-        val widgetLoader = RealtimeDatabaseListener()
+        val widgetLoader = RealtimeDatabaseListener(this@HomeFragment.requireContext())
         widgetLoader.loadWidgetsFromFirebase(
             requireContext(),
             db,
@@ -203,7 +203,7 @@ class HomeFragment : Fragment() {
                 setColor(Color.parseColor("#8A67D1"))
                 selectedBoxId = boxId
 
-                val realtimeListener = RealtimeDatabaseListener()
+                val realtimeListener = RealtimeDatabaseListener(this@HomeFragment.requireContext())
 
                 realtimeListener.listenToRealtimeUpdates(
                     boxId = boxId,
@@ -234,14 +234,13 @@ class HomeFragment : Fragment() {
             val newColor = Color.parseColor("#8A67D1")
             (button.background as GradientDrawable).setColor(newColor)
 
-            // Mark the current room as selected in Firebase
             val selectedRoomData = mapOf(
                 "name" to buttonName,
                 "box_id" to boxId,
                 "isSelected" to true
             )
             selectedBoxId = boxId
-            val realtimeListener = RealtimeDatabaseListener()
+            val realtimeListener = RealtimeDatabaseListener(this@HomeFragment.requireContext())
 
             realtimeListener.listenToRealtimeUpdates(
                 boxId = boxId,
@@ -271,10 +270,10 @@ class HomeFragment : Fragment() {
                         .update("isSelected", false)
                 }
             }
-            // Clear the grid and reload widgets for the newly selected room
+
             gridLayout.removeAllViews()
 
-            val widgetLoader = RealtimeDatabaseListener()
+            val widgetLoader = RealtimeDatabaseListener(this@HomeFragment.requireContext())
             widgetLoader.loadWidgetsFromFirebase(
                 requireContext(),
                 db,
@@ -291,7 +290,7 @@ class HomeFragment : Fragment() {
     private fun toggleEditMode() {
         isEditMode = !isEditMode
         gridLayout.removeAllViews()
-        val widgetLoader = RealtimeDatabaseListener()
+        val widgetLoader = RealtimeDatabaseListener(this@HomeFragment.requireContext())
         widgetLoader.loadWidgetsFromFirebase(
             requireContext(),
             db,
@@ -362,7 +361,7 @@ class HomeFragment : Fragment() {
                             }
                         gridLayout.removeAllViews()
 
-                        val widgetLoader = RealtimeDatabaseListener()
+                        val widgetLoader = RealtimeDatabaseListener(requireContext())
                         widgetLoader.loadWidgetsFromFirebase(
                             requireContext(),
                             db,
