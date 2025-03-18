@@ -1,8 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Selected state -->
-    <item android:drawable="@drawable/selected_button_bg" android:state_checked="true" />
-    <!-- Pressed state -->
-    <item android:drawable="@drawable/pressed_button_bg" android:state_pressed="true" />
-    <!-- Default state -->
-    <item android:drawable="@drawable/default_button_bg" />
-</selector>
