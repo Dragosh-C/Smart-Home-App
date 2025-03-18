@@ -29,6 +29,18 @@ class CameraFragment : Fragment() {
     private var x = 90
     private var y = 90
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val webView = view?.findViewById<WebView>(R.id.webview)
+        webView?.apply {
+            stopLoading()
+            clearHistory()
+            clearCache(true)
+            loadUrl("about:blank")
+            removeAllViews()
+            destroy()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,8 +65,9 @@ class CameraFragment : Fragment() {
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
 
-        webView.loadUrl("https://rt.ivs.rocks/demos/pk-mode")
+//      webView.loadUrl("https://rt.ivs.rocks/demos/pk-mode")
 
+        webView.loadUrl("http://192.168.45.124/")
 
         val leftButton: ImageView = view.findViewById(R.id.joystick_left)
         val rightButton: ImageView = view.findViewById(R.id.joystick_right)
@@ -62,14 +75,8 @@ class CameraFragment : Fragment() {
         val downButton: ImageView = view.findViewById(R.id.joystick_down)
         val centerButton: ImageView = view.findViewById(R.id.joystick_center)
 
-
         // read x and y from firebase
-
         buttonListener(rightButton, leftButton, upButton, downButton, centerButton, view)
-
-
-
-
 
         return view
     }
@@ -93,7 +100,7 @@ class CameraFragment : Fragment() {
         rightButton.setOnTouchListener { _, event ->
             handleButtonPress(event.action, {
                 if (x < 180) {
-                    x++
+                    x+=2
                     vibrate()
                     updateFirebase()
                 }
@@ -101,12 +108,10 @@ class CameraFragment : Fragment() {
             true
         }
 
-
-
         leftButton.setOnTouchListener { _, event ->
             handleButtonPress(event.action, {
                 if (x > 0) {
-                    x--
+                    x-=2
                     vibrate()
                     updateFirebase()
                 }
@@ -119,7 +124,7 @@ class CameraFragment : Fragment() {
         upButton.setOnTouchListener { _, event ->
             handleButtonPress(event.action, {
                 if (y < 180) {
-                    y++
+                    y+=2
                     vibrate()
                     updateFirebase()
                 }
@@ -133,7 +138,7 @@ class CameraFragment : Fragment() {
         downButton.setOnTouchListener { _, event ->
             handleButtonPress(event.action, {
                 if (y > 0) {
-                    y--
+                    y-=2
                     vibrate()
                     updateFirebase()
                 }
@@ -144,8 +149,8 @@ class CameraFragment : Fragment() {
         // Center Button
 
         centerButton.setOnClickListener {
-            x = 0
-            y = 0
+            x = 90
+            y = 90
             vibrate()
         }
 
@@ -154,6 +159,22 @@ class CameraFragment : Fragment() {
         settingsButton.setOnClickListener {
             val intent = Intent(activity, SettingsActivity::class.java)
             startActivity(intent)
+        }
+
+        // Turn on/off camera flashlight
+        val flashlightButton = view.findViewById<ImageButton>(R.id.flashlight_button)
+        flashlightButton.setOnClickListener {
+            val flashlightRef: DatabaseReference = database.reference.child("camera/1001/flashlight")
+            flashlightRef.get().addOnSuccessListener {
+                if (it.exists()) {
+                    val flashlightState = it.value as Boolean
+                    flashlightRef.setValue(!flashlightState)
+                }
+                else {
+                    flashlightRef.setValue(true)
+                }
+            }
+            vibrate()
         }
     }
 

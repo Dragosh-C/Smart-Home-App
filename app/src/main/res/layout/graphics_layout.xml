@@ -150,12 +150,25 @@
                 android:id="@+id/airQualityTab"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/tab_background"
                 android:gravity="center"
                 android:paddingHorizontal="16dp"
                 android:text="Air Quality"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/batteryLevelTab"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@drawable/tab_background"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="Battery Level"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </HorizontalScrollView>
 

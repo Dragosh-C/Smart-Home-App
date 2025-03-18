@@ -59,16 +59,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "smart_home_notifications"
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Smart Home Notifications",
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Channel for smart home app notifications"
-            }
-            notificationManager.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            channelId,
+            "Smart Home Notifications",
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            description = "Channel for smart home app notifications"
         }
+        notificationManager.createNotificationChannel(channel)
+
 
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

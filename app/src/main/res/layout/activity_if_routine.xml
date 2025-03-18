@@ -218,9 +218,9 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
+                    android:src="@drawable/ic_schedule"
                     android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -245,9 +245,9 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
+                    android:src="@drawable/ic_schedule"
                     android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -265,70 +265,68 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Specific Time -->
-            <LinearLayout
-                android:id="@+id/specific_time_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_background"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#333333"
-                android:elevation="4dp">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
-                    android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/rounded_background"
+                            android:padding="16dp"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="16dp"
+                            android:backgroundTint="#333333"
+                            android:elevation="4dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Specific time"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_schedule"
+                                android:layout_marginEnd="16dp"
+                            />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Specific time"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp" />
+                        </LinearLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Place"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Place"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp" />
 
-            <!-- Specific Place -->
-            <LinearLayout
-                android:id="@+id/specific_place_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_background"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#333333"
-                android:elevation="4dp">
+                        <!-- Specific Place -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/rounded_background"
+                            android:padding="16dp"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="16dp"
+                            android:backgroundTint="#333333"
+                            android:elevation="4dp">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_location"
-                    android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_location"
+                                android:layout_marginEnd="16dp"
+                                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Specific place"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Specific place"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp" />
+                        </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -353,9 +351,9 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_camera"
+                    android:src="@drawable/ic_camera2"
                     android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"

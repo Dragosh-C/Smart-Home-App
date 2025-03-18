@@ -1,6 +1,7 @@
 package app.smarthomeapp.mainpage
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.util.Log
 import android.view.Gravity
@@ -102,6 +103,7 @@ fun addWidgetToGridLayout(
                 "Outlet" -> R.drawable.ic_outlet
                 "Dimmer" -> R.drawable.ic_dimmer
                 "Light" -> R.drawable.ic_light
+                "Device" -> R.drawable.ic_device
                 else -> R.drawable.ic_add
             }
         )
@@ -130,6 +132,16 @@ fun addWidgetToGridLayout(
     innerLayout.addView(iconAndTextLayout)
     cardView.addView(innerLayout)
     gridLayout.addView(cardView)
+    // open a new activity when the card view is clicked
+    cardView.setOnClickListener {
+        val intent = Intent(context, WidgetDetailActivity::class.java).apply {
+            putExtra("widget_name", widget.name)
+            putExtra("widget_type", widget.type)
+            putExtra("widget_port", widget.port)
+        }
+        context.startActivity(intent)
+    }
+
 }
 
 private fun deleteWidget(

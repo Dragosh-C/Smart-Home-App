@@ -13,16 +13,13 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.smarthomeapp.R
 import app.smarthomeapp.SettingsActivity
-
 import com.google.android.material.switchmaterial.SwitchMaterial
 import java.util.Calendar
 import app.smarthomeapp.viewmodels.ScenariosViewModel
-import kotlinx.coroutines.launch
 
 
 class ScenariosFragment : Fragment() {
@@ -117,10 +114,7 @@ class ScenariosFragment : Fragment() {
             viewModel.setAlarm(requireContext(), selectedHour, selectedMinute, isAdaptiveLight)
             dialog.dismiss()
         }
-
         dialog.show()
-
-
     }
 }
 

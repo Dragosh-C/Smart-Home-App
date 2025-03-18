@@ -70,7 +70,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_temperature"
+                    android:src="@drawable/ic_relay"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -83,6 +83,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/dimmer_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -96,7 +97,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_dimmer"
+                    android:src="@drawable/ic_dimmer2"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -110,6 +111,7 @@
 
 
             <LinearLayout
+                android:id="@+id/alarm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -123,7 +125,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_humidity"
+                    android:src="@drawable/ic_alarm"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -137,6 +139,7 @@
 
 
             <LinearLayout
+                android:id="@+id/camera_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -150,7 +153,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_camera"
+                    android:src="@drawable/ic_camera2"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -163,6 +166,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/locker_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -176,7 +180,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_dial"
+                    android:src="@drawable/ic_lock"
                     android:layout_marginEnd="16dp"
                     />
 
@@ -197,6 +201,7 @@
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
+                android:id="@+id/notification_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -210,9 +215,9 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
+                    android:src="@drawable/ic_notification"
                     android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -223,6 +228,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/message_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -236,9 +242,9 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
+                    android:src="@drawable/ic_message"
                     android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -249,75 +255,75 @@
             </LinearLayout>
 
             <!-- Time Section -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Time"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_marginBottom="8dp" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_background"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#333333"
-                android:elevation="4dp">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:background="@drawable/rounded_background"-->
+<!--                android:padding="16dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:backgroundTint="#333333"-->
+<!--                android:elevation="4dp">-->
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar"
-                    android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:src="@drawable/ic_schedule"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Specific time"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Specific time"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp" />-->
+<!--            </LinearLayout>-->
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Place"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Place"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_marginBottom="8dp" />-->
 
-            <!-- Specific Place -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_background"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#333333"
-                android:elevation="4dp">
+<!--            &lt;!&ndash; Specific Place &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:background="@drawable/rounded_background"-->
+<!--                android:padding="16dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:backgroundTint="#333333"-->
+<!--                android:elevation="4dp">-->
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_location"
-                    android:layout_marginEnd="16dp"
-                    app:tint="#FFFFFF" />
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:src="@drawable/ic_location"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Specific place"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Specific place"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp" />-->
+<!--            </LinearLayout>-->
 
 
 

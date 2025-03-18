@@ -2,6 +2,7 @@ package app.smarthomeapp
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -16,6 +17,11 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class GraphicsActivity : AppCompatActivity() {
     private lateinit var viewModel: GraphicsViewModel
@@ -43,14 +49,16 @@ class GraphicsActivity : AppCompatActivity() {
             findViewById(R.id.humidityTab),
             findViewById(R.id.luminosityTab),
             findViewById(R.id.powerUsageTab),
-            findViewById<TextView>(R.id.airQualityTab)
+            findViewById(R.id.airQualityTab),
+            findViewById<TextView>(R.id.batteryLevelTab)
         )
 
-        viewModel.currentMetric.observe(this) { metric ->
-            title.text = metric
-            infoLabel.text = metric
-            valueLabel.text = getValueForMetric(metric)
-            updateTabSelection(metric, metricTabs)
+        viewModel.currentMetric.observe(this) { m ->
+            title.text = m
+            infoLabel.text = m
+            valueLabel.text = getValueForMetric(m)
+            updateTabSelection(m, metricTabs)
+            updateLightValue(m)
         }
 
         viewModel.chartData.observe(this) { entries ->
@@ -80,6 +88,7 @@ class GraphicsActivity : AppCompatActivity() {
             viewModel.setTimeRange(newTimeRange)
         }
 
+
         findViewById<ImageView>(R.id.backButton).setOnClickListener {
             finish()
         }
@@ -92,6 +101,7 @@ class GraphicsActivity : AppCompatActivity() {
             "Luminosity" -> "500 lux"
             "Power Usage" -> "100 W"
             "Air Quality" -> "50 AQI"
+            "Battery Level" -> "4.2 V"
             else -> ""
         }
     }
@@ -109,15 +119,16 @@ class GraphicsActivity : AppCompatActivity() {
     }
 
     private fun updateChart(entries: List<Entry>, labels: List<String>, labelCount: Int) {
-        val fillDrawable = when (viewModel.currentMetric.value) {
-            "Temperature" -> getDrawable(R.drawable.gradient_fill_red)!!
-            "Luminosity" -> getDrawable(R.drawable.gradient_fill_yellow)!!
-            else -> getDrawable(R.drawable.gradient_fill_yellow)!!
+
+        val (lineColor, fillDrawable) = when (viewModel.currentMetric.value) {
+            "Temperature" -> Pair(Color.RED, getDrawable(R.drawable.gradient_fill_red)!!)
+            "Luminosity" -> Pair(Color.YELLOW, getDrawable(R.drawable.gradient_fill_yellow)!!)
+            else -> Pair(Color.YELLOW, getDrawable(R.drawable.gradient_fill_yellow)!!)
         }
 
         val lineDataSet = LineDataSet(entries, viewModel.currentMetric.value).apply {
-            color = Color.RED
-            setCircleColor(Color.WHITE)
+            color = lineColor
+            setCircleColor(lineColor)
             setDrawFilled(true)
             mode = LineDataSet.Mode.CUBIC_BEZIER
             this.fillDrawable = fillDrawable
@@ -126,11 +137,15 @@ class GraphicsActivity : AppCompatActivity() {
         val lineData = LineData(lineDataSet)
         lineChart.data = lineData
 
+        // Disable label on each point on the plot line
+        lineDataSet.setDrawValues(false)
+
         configureXAxis(lineChart.xAxis, labels, labelCount)
         configureYAxis(lineChart.axisLeft)
         lineChart.axisRight.isEnabled = false
         lineChart.description.isEnabled = false
         lineChart.legend.isEnabled = false
+
         lineChart.animateY(300)
         lineChart.invalidate()
     }
@@ -152,12 +167,76 @@ class GraphicsActivity : AppCompatActivity() {
             axisMinimum = 0f
             axisMaximum = when (viewModel.currentMetric.value) {
                 "Temperature" -> 50f
-                "Luminosity" -> 1000f
-                "Power Usage" -> 1000f
+                "Luminosity" -> 100f
+                "Power Usage" -> 300f
+                "Battery Level" -> 5f
                 else -> 100f
             }
             labelCount = 6
             setDrawGridLines(true)
         }
     }
+
+    // Store the current listener and database reference
+    private var currentListener: ValueEventListener? = null
+    private var currentDatabaseReference: DatabaseReference? = null
+
+    fun updateLightValue(filedName: String) {
+        var dataName = ""
+        if (filedName == "Temperature") dataName = "temperature"
+        if (filedName == "Humidity") dataName = "humidity"
+        if (filedName == "Luminosity") dataName = "light_intensity"
+        if (filedName == "Power Usage") dataName = "power_usage"
+        if (filedName == "Air Quality") dataName = "air_quality"
+        if (filedName == "Battery Level") dataName = "battery_voltage"
+
+        // Remove the old listener if it exists
+        currentListener?.let { listener ->
+            currentDatabaseReference?.removeEventListener(listener)
+            Log.d("Firebase", "Removed old listener for $dataName")
+        }
+
+        // Initialize Firebase using your specific database URL
+        val database = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app")
+        Log.d("Firebase", "Database instance: $database")
+
+        // Create a reference to the specific node you want to listen to
+        val myRef: DatabaseReference = database.getReference("/box_id/1212/$dataName")
+
+        // Create a new listener for the new metric
+        val newListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Get the value of light intensity from the snapshot
+                val value = snapshot.getValue(Double::class.java)
+
+                // Update the UI with the new value
+                val lightText = findViewById<TextView>(R.id.temperatureValue)
+
+                when (filedName) {
+                    "Temperature" -> lightText.text = "$value °C"
+                    "Humidity" -> lightText.text = "$value %"
+                    "Luminosity" -> lightText.text = "$value Lux"
+                    "Power Usage" -> lightText.text = "$value W"
+                    "Air Quality" -> lightText.text = "$value AQI"
+                    "Battery Level" -> lightText.text = "$value V"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle errors if the data can't be read
+                Log.e("Firebase", "Failed to read value: ${error.message}")
+            }
+        }
+
+        // Set the new listener to the reference
+        myRef.addValueEventListener(newListener)
+
+        // Store the new listener and reference to remove it later if needed
+        currentListener = newListener
+        currentDatabaseReference = myRef
+
+        Log.d("Firebase", "Added new listener for $dataName")
+    }
+
+
 }

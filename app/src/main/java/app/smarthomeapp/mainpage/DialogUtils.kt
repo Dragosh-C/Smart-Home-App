@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import app.smarthomeapp.R
+import com.google.firebase.database.FirebaseDatabase
 
 
 object DialogHelper {
@@ -27,6 +28,9 @@ object DialogHelper {
         updateWidget: (Widget) -> Unit,
         editButton: Button
     ) {
+
+        val databaseReference =
+            FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_select_data)
 
@@ -35,6 +39,7 @@ object DialogHelper {
         val typeSpinner = dialog.findViewById<Spinner>(R.id.type_spinner)
         val saveButton = dialog.findViewById<Button>(R.id.save_button)
         val modifyButton = dialog.findViewById<Button>(R.id.modify_button)
+        val deviceIDInput = dialog.findViewById<EditText>(R.id.device_id_input)
 
         val portOptions = (1..9).map { "Port $it" }
         val portAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, portOptions)
@@ -58,9 +63,36 @@ object DialogHelper {
             val widgetName = nameInput.text.toString()
             val selectedPort = portSpinner.selectedItem.toString()
             val selectedType = typeSpinner.selectedItem.toString()
+            val deviceID = deviceIDInput.text.toString()
 
-            if (widgetName.isNotBlank()) {
+
+            if (deviceID.isNotBlank() && widgetName.isNotBlank()) {
                 if (existingWidget == null) {
+                    // Add a new widget if no existing widget
+                    addNewWidget(widgetName, deviceID, "Device")
+
+                    // send also data to the rtb
+                    val data = hashMapOf(
+                        "name" to widgetName,
+                        "port" to deviceID,
+                        "type" to "Device"
+                    )
+                } else {
+                    // Update existing widget
+
+                    updateWidget(
+                        existingWidget.copy(
+                            name = widgetName,
+                            port = deviceID,
+                            type = "Device",
+
+                        )
+                    )
+                }
+                dialog.dismiss()
+            } else
+                if (widgetName.isNotBlank()) {
+                    if (existingWidget == null) {
                     // Add a new widget if no existing widget
                     addNewWidget(widgetName, selectedPort, selectedType)
                 } else {

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.provider.AlarmClock
 import android.util.Log
+import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -207,6 +208,34 @@ class ScenariosViewModel : ViewModel() {
             _alarmSetMessage.value = "Failed to update home location: ${e.localizedMessage}"
         }
     }
+
+    fun setAlarm(testButton: Button) {
+        // Reference to the database
+        val databaseReference = rtb.reference
+        val boxId = "1212"
+
+        // Fetch and toggle the alarm value atomically
+        databaseReference.child("box_id").child(boxId).child("alarm").get().addOnSuccessListener { snapshot ->
+            val alarmState = snapshot.value?.toString() == "true" // Current alarm state
+
+            // Toggle the alarm state and update the database
+            val newState = if (alarmState) "false" else "true"
+            databaseReference.child("box_id").child(boxId).child("alarm").setValue(newState)
+                .addOnSuccessListener {
+                    // Update the button text after successful write
+                    testButton.text = if (newState == "true") "Stop" else "Test"
+                }
+                .addOnFailureListener {
+                    // Handle the error, if the write fails
+                    testButton.text = "Error"
+                }
+        }.addOnFailureListener {
+            // Handle the error, if the read fails
+            testButton.text = "Error"
+        }
+    }
+
+
 
     private fun isWithinRadius(
         userLat: Double, userLon: Double,

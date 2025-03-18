@@ -18,7 +18,7 @@ class AddNewRoutineActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var widgetAdapter: WidgetAdapter
     private lateinit var widgetDatabase: WidgetDatabase
-
+    private lateinit var widgetTitle: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +60,9 @@ class AddNewRoutineActivity : AppCompatActivity() {
                     .joinToString(", ") { it.text.toString() }
 
 
+
                 val widget = Widget1(
-                    title = "Widget",
+                    title = widgetTitle,
                     type = "$ifCondition -> $thenAction"
                 )
 
@@ -89,6 +90,7 @@ class AddNewRoutineActivity : AppCompatActivity() {
                 }
                 REQUEST_CODE_THEN -> {
                     val action = data.getStringExtra("selected_action")
+                    widgetTitle = data.getStringExtra("title").toString()
                     addConditionView(action, findViewById(R.id.then_container))
                 }
             }

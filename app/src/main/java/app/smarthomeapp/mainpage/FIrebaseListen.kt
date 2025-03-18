@@ -115,7 +115,7 @@ class RealtimeDatabaseListener(context: Context) {
                 })
 
             // Power Listener
-            databaseReference.child("box_id").child(boxId).child("power")
+            databaseReference.child("box_id").child(boxId).child("power_usage")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val newPower = snapshot.getValue(Int::class.java) ?: 0
@@ -137,6 +137,63 @@ class RealtimeDatabaseListener(context: Context) {
         }
     }
 
+
+
+//    fun loadWidgetsFromFirebase(
+//        context: Context,
+//        db: FirebaseFirestore,
+//        auth: FirebaseAuth,
+//        gridLayout: GridLayout,
+//        isEditMode: Boolean,
+//        widgetViews: MutableMap<String, SwitchCompat>
+//    ) {
+//        db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
+//            .addOnSuccessListener { result ->
+//                for (document in result) {
+//                    val room = document.data
+//                    val roomName = room["name"] as String
+//                    val isSelected = room["isSelected"] as Boolean
+//                    if (isSelected) {
+//                        db.collection("users").document(auth.currentUser!!.uid).collection("rooms")
+//                            .document(roomName).collection("widgets").get()
+//                            .addOnSuccessListener { res ->
+//                                for (doc in res) {
+//                                    val widget = doc.toObject(Widget::class.java)
+//                                    addWidgetToGridLayout(context, widget, gridLayout, db, auth, isEditMode, widgetViews)
+//
+//                                    val databaseReference =
+//                                        FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+//
+//                                    widgetViews[widget.name]?.setOnCheckedChangeListener { _, isChecked ->
+//                                        databaseReference.child("ports").child(widget.port)
+//                                            .setValue(isChecked)
+//                                    }
+//
+//                                    val portRef =
+//                                        databaseReference.child("ports").child(widget.port)
+//                                    portRef.addValueEventListener(object : ValueEventListener {
+//                                        override fun onDataChange(snapshot: DataSnapshot) {
+//                                            val isEnabled =
+//                                                snapshot.getValue(Boolean::class.java) ?: false
+//                                            widgetViews[widget.name]?.isChecked = isEnabled
+//                                        }
+//
+//                                        override fun onCancelled(error: DatabaseError) {
+//                                            Log.e("WidgetLoader", "Error reading port data: ${error.message}")
+//                                        }
+//                                    })
+//                                }
+//                            }
+//                    }
+//                }
+//            }
+//    }
+
+    private val databaseReference =
+        FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+
+    private val widgetListeners = mutableMapOf<String, ValueEventListener>()
+
     fun loadWidgetsFromFirebase(
         context: Context,
         db: FirebaseFirestore,
@@ -145,6 +202,12 @@ class RealtimeDatabaseListener(context: Context) {
         isEditMode: Boolean,
         widgetViews: MutableMap<String, SwitchCompat>
     ) {
+        // Remove old listeners
+        widgetListeners.forEach { (port, listener) ->
+            databaseReference.child("ports").child(port).removeEventListener(listener)
+        }
+        widgetListeners.clear()
+
         db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -159,32 +222,36 @@ class RealtimeDatabaseListener(context: Context) {
                                     val widget = doc.toObject(Widget::class.java)
                                     addWidgetToGridLayout(context, widget, gridLayout, db, auth, isEditMode, widgetViews)
 
-                                    val databaseReference =
-                                        FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
-
                                     widgetViews[widget.name]?.setOnCheckedChangeListener { _, isChecked ->
-                                        databaseReference.child("ports").child(widget.port)
-                                            .setValue(isChecked)
+
+                                        if (widget.type == "Device") {
+                                            databaseReference.child("devices").child(widget.port).child("actuator").setValue(isChecked)
+                                        } else {
+                                            databaseReference.child("devices").child("ports").child(widget.port).setValue(isChecked)
+                                        }
                                     }
 
-                                    val portRef =
-                                        databaseReference.child("ports").child(widget.port)
-                                    portRef.addValueEventListener(object : ValueEventListener {
+                                    // Listen to port state changes
+                                    val portRef = databaseReference.child("ports").child(widget.port)
+                                    val listener = object : ValueEventListener {
                                         override fun onDataChange(snapshot: DataSnapshot) {
-                                            val isEnabled =
-                                                snapshot.getValue(Boolean::class.java) ?: false
+                                            val isEnabled = snapshot.getValue(Boolean::class.java) ?: false
                                             widgetViews[widget.name]?.isChecked = isEnabled
                                         }
 
                                         override fun onCancelled(error: DatabaseError) {
                                             Log.e("WidgetLoader", "Error reading port data: ${error.message}")
                                         }
-                                    })
+                                    }
+
+                                    portRef.addValueEventListener(listener)
+                                    widgetListeners[widget.port] = listener
                                 }
                             }
                     }
                 }
             }
     }
+
 
 }

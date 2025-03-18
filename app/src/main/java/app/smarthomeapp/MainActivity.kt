@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         enableEdgeToEdge()
         // Set background gradient

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
@@ -25,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[ScenariosViewModel::class.java]
 
         val switchButton = findViewById<SwitchCompat>(R.id.switch_enable_location)
+        val testButton = findViewById<Button>(R.id.btn_test_alarm)
 
         // Restore the saved state of the switch
         val sharedPref = getSharedPreferences("app.smarthomeapp", MODE_PRIVATE)
@@ -52,6 +54,12 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_change_home_location).setOnClickListener {
             updateHomeLocationDialog()
         }
+
+        testButton.setOnClickListener {
+            viewModel.setAlarm(testButton)
+        }
+
+
     }
 
     private fun updateHomeLocationDialog() {
@@ -63,6 +71,7 @@ class SettingsActivity : AppCompatActivity() {
         val longitudeInputField = builder.findViewById<EditText>(R.id.longitude_input)
         val saveButton = builder.findViewById<Button>(R.id.change_location_button)
         val autodetectLocationButton = builder.findViewById<Button>(R.id.autodetect_location_button)
+
 
         val gradientDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
@@ -99,6 +108,7 @@ class SettingsActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
 
         val layoutParams = WindowManager.LayoutParams()
         layoutParams.copyFrom(builder.window?.attributes)

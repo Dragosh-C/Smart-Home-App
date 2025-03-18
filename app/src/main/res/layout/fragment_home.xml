@@ -6,7 +6,6 @@
     android:orientation="vertical"
     >
 
-
     <!-- Top Bar -->
     <RelativeLayout
         android:layout_width="match_parent"

@@ -118,6 +118,7 @@ class HomeFragment : Fragment() {
 
         val lightButton: LinearLayout = view.findViewById(R.id.lighting_button)
         lightButton.setOnClickListener {
+
             navigateToGraphicsActivity("Luminosity", "Day")
         }
 
@@ -131,6 +132,7 @@ class HomeFragment : Fragment() {
         val intent = Intent(requireContext(), GraphicsActivity::class.java).apply {
             putExtra("metric", metric)
             putExtra("timeRange", timeRange)
+
         }
         startActivity(intent)
     }
