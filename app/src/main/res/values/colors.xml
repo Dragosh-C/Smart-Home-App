@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="widget_background">#66000000</color> <!-- Example: 40% opacity black -->
+    <color name="purple_500">#6200EE</color> <!-- purple -->
+    <color name="gray_800">#303030</color> <!-- Dark Gray -->
+    <color name="gray_700">#424242</color> <!-- Lighter Gray -->
+
+
+
+</resources>

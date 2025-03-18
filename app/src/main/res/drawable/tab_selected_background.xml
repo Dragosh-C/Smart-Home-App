@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#C38C2A" /> <!-- Highlight color (Orange) -->
+    <corners android:radius="8dp" />  <!-- Rounded corners -->
+</shape>
+
+
+<!-- FFA500 -->

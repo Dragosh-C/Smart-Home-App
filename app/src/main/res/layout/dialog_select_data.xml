@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="#801c1d23">
+
+
+    <!-- Input for widget name -->
+    <EditText
+        android:id="@+id/name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Widget Name"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Dropdown for port selection -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Port:"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="3dp"/>
+
+    <Spinner
+        android:id="@+id/port_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="16sp"
+        />
+
+    <!-- Dropdown for type selection -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Type:"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="3dp"/>
+
+    <Spinner
+        android:id="@+id/type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="5dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Or Enter Device Id:"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/device_id_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Device Id"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        />
+
+    <!-- Save button -->
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_background"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/modify_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modify Widgets"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_background"
+        android:textSize="18sp"
+
+        android:padding="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
+        />
+
+</LinearLayout>
