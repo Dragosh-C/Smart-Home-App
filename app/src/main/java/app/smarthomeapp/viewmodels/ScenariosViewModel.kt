@@ -38,7 +38,7 @@ class ScenariosViewModel : ViewModel() {
 
     private val firestore = FirebaseFirestore.getInstance()
     // real time database
-    private val rtb = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/")
+    private val rtb = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
     fun startLocationTracking(context: Context) {

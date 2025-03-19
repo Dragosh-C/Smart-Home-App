@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 
@@ -28,6 +29,7 @@ class GraphicsActivity : AppCompatActivity() {
     private lateinit var lineChart: LineChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.graphics_layout)
 
@@ -197,7 +199,7 @@ class GraphicsActivity : AppCompatActivity() {
         }
 
         // Initialize Firebase using your specific database URL
-        val database = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app")
+        val database = FirebaseDatabase.getInstance()
         Log.d("Firebase", "Database instance: $database")
 
         // Create a reference to the specific node you want to listen to

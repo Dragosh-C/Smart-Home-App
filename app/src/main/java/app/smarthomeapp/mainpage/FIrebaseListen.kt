@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import app.smarthomeapp.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,8 +24,7 @@ class RealtimeDatabaseListener(context: Context) {
         powerText: TextView
     ) {
         if (selectedBoxId == boxId) {
-            val databaseReference =
-                FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+            val databaseReference = FirebaseUtils.databaseRef
 
             databaseReference.child("box_id").child(boxId).child("temperature")
                 .addValueEventListener(object : ValueEventListener {
@@ -203,9 +203,9 @@ class RealtimeDatabaseListener(context: Context) {
         widgetViews: MutableMap<String, SwitchCompat>
     ) {
         // Remove old listeners
-        widgetListeners.forEach { (port, listener) ->
-            databaseReference.child("ports").child(port).removeEventListener(listener)
-        }
+//        widgetListeners.forEach { (port, listener) ->
+//            databaseReference.child("devices").child(port).removeEventListener(listener)
+//        }
         widgetListeners.clear()
 
         db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
@@ -227,12 +227,29 @@ class RealtimeDatabaseListener(context: Context) {
                                         if (widget.type == "Device") {
                                             databaseReference.child("devices").child(widget.port).child("actuator").setValue(isChecked)
                                         } else {
-                                            databaseReference.child("devices").child("ports").child(widget.port).setValue(isChecked)
+                                            databaseReference.child("devices").child("ports").child(widget.port).child("port").setValue(isChecked)
                                         }
                                     }
 
                                     // Listen to port state changes
-                                    val portRef = databaseReference.child("ports").child(widget.port)
+//                                    val portRef = databaseReference.child("ports").child(widget.port)
+//                                    val listener = object : ValueEventListener {
+//                                        override fun onDataChange(snapshot: DataSnapshot) {
+//                                            val isEnabled = snapshot.getValue(Boolean::class.java) ?: false
+//                                            widgetViews[widget.name]?.isChecked = isEnabled
+//                                        }
+//
+//                                        override fun onCancelled(error: DatabaseError) {
+//                                            Log.e("WidgetLoader", "Error reading port data: ${error.message}")
+//                                        }
+//                                    }
+
+                                    val portRef = if (widget.type == "Device") {
+                                        databaseReference.child("devices").child(widget.port).child("actuator")
+                                    } else {
+                                        databaseReference.child("devices").child("ports").child(widget.port).child("port")
+                                    }
+
                                     val listener = object : ValueEventListener {
                                         override fun onDataChange(snapshot: DataSnapshot) {
                                             val isEnabled = snapshot.getValue(Boolean::class.java) ?: false

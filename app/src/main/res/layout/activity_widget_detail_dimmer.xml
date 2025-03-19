@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+    android:id="@+id/dimmer_layout"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@drawable/background_gardient"
+android:padding="16dp"
+android:gravity="center"
+android:elevation="4dp">
+
+<!-- Light Bulb Icon -->
+<ImageView
+    android:id="@+id/dimmer_icon"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:src="@drawable/ic_light"
+    android:layout_gravity="center"/>
+
+
+    <SeekBar
+        android:id="@+id/dimmer_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="50"
+        android:progressDrawable="@drawable/custom_seekbar"
+        android:thumb="@null"
+        android:background="@android:color/transparent"
+        android:foreground="@android:color/transparent"
+        android:splitTrack="false"
+        android:focusable="false"
+        android:clickable="false"
+        android:longClickable="false"
+        android:layout_marginTop="16dp"
+    />
+
+
+
+
+    <!-- Label for Brightness Percentage -->
+    <TextView
+        android:id="@+id/dimmer_percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="50%"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>

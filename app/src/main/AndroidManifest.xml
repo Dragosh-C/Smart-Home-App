@@ -67,6 +67,10 @@
             android:name=".mainpage.WidgetDetailActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".mainpage.WidgetDetailsActivityDevice"
+            android:exported="false" />
+
         <activity android:name=".GraphicsActivity" android:exported="false" />
         <activity android:name=".SettingsActivity" />
 

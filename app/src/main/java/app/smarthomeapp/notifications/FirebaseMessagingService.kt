@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import android.util.Log
+import app.smarthomeapp.FirebaseUtils
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import app.smarthomeapp.MainActivity
@@ -41,9 +42,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String) {
-        val database: DatabaseReference = FirebaseDatabase.getInstance(
-            "https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/"
-        ).reference
+        val database = FirebaseUtils.databaseRef
 
         database.child("userToken").setValue(token)
             .addOnSuccessListener {

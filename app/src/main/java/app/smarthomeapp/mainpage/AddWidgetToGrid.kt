@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SwitchCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import app.smarthomeapp.R
+import app.smarthomeapp.mainpage.WidgetDetailsActivityDevice
 
 fun addWidgetToGridLayout(
     context: Context,
@@ -133,15 +134,27 @@ fun addWidgetToGridLayout(
     cardView.addView(innerLayout)
     gridLayout.addView(cardView)
     // open a new activity when the card view is clicked
-    cardView.setOnClickListener {
-        val intent = Intent(context, WidgetDetailActivity::class.java).apply {
-            putExtra("widget_name", widget.name)
-            putExtra("widget_type", widget.type)
-            putExtra("widget_port", widget.port)
-        }
-        context.startActivity(intent)
-    }
 
+
+    if (widget.type == "Dimmer") {
+        cardView.setOnClickListener {
+            val intent = Intent(context, WidgetDetailActivity::class.java).apply {
+                putExtra("widget_name", widget.name)
+                putExtra("widget_type", widget.type)
+                putExtra("widget_port", widget.port)
+            }
+            context.startActivity(intent)
+        }
+    } else if (widget.type == "Device") {
+        cardView.setOnClickListener {
+            val intent = Intent(context, WidgetDetailsActivityDevice::class.java).apply {
+                putExtra("widget_name", widget.name)
+                putExtra("widget_type", widget.type)
+                putExtra("widget_port", widget.port)
+            }
+            context.startActivity(intent)
+        }
+    }
 }
 
 private fun deleteWidget(

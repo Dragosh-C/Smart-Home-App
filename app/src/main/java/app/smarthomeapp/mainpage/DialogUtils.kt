@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import app.smarthomeapp.FirebaseUtils
 import app.smarthomeapp.R
 import com.google.firebase.database.FirebaseDatabase
 
@@ -29,8 +30,7 @@ object DialogHelper {
         editButton: Button
     ) {
 
-        val databaseReference =
-            FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/").reference
+        val databaseReference = FirebaseUtils.databaseRef
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_select_data)
 

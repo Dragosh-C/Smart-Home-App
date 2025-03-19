@@ -51,7 +51,7 @@ class CameraFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_camera, container, false)
 
         val webView: WebView = view.findViewById(R.id.webview)
-        database = FirebaseDatabase.getInstance("https://smart-home-app-7c709-default-rtdb.europe-west1.firebasedatabase.app/")
+        database = FirebaseDatabase.getInstance()
 
 
         webView.settings.apply {
