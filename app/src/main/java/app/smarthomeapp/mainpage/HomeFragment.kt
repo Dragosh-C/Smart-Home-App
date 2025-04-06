@@ -132,6 +132,7 @@ class HomeFragment : Fragment() {
         val intent = Intent(requireContext(), GraphicsActivity::class.java).apply {
             putExtra("metric", metric)
             putExtra("timeRange", timeRange)
+            putExtra("selectedBoxId", selectedBoxId)
 
         }
         startActivity(intent)

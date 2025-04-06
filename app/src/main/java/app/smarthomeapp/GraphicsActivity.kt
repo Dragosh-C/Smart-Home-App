@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener
 class GraphicsActivity : AppCompatActivity() {
     private lateinit var viewModel: GraphicsViewModel
     private lateinit var lineChart: LineChart
+    private lateinit var selectedBoxId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -37,6 +38,7 @@ class GraphicsActivity : AppCompatActivity() {
 
         val metric = intent.getStringExtra("metric") ?: "Temperature"
         val timeRange = intent.getStringExtra("timeRange") ?: "Day"
+        selectedBoxId = intent.getStringExtra("selectedBoxId") ?: "1212"
 
         viewModel.setMetric(metric)
         viewModel.setTimeRange(timeRange)
@@ -90,6 +92,13 @@ class GraphicsActivity : AppCompatActivity() {
             viewModel.setTimeRange(newTimeRange)
         }
 
+        val settingsButton = findViewById<ImageView>(R.id.settingsButton)
+        settingsButton.setOnClickListener {
+            val intent = intent
+            intent.setClass(this, SettingsGraphicsActivity::class.java)
+            startActivity(intent)
+        }
+
 
         findViewById<ImageView>(R.id.backButton).setOnClickListener {
             finish()
@@ -139,7 +148,6 @@ class GraphicsActivity : AppCompatActivity() {
         val lineData = LineData(lineDataSet)
         lineChart.data = lineData
 
-        // Disable label on each point on the plot line
         lineDataSet.setDrawValues(false)
 
         configureXAxis(lineChart.xAxis, labels, labelCount)
@@ -179,7 +187,6 @@ class GraphicsActivity : AppCompatActivity() {
         }
     }
 
-    // Store the current listener and database reference
     private var currentListener: ValueEventListener? = null
     private var currentDatabaseReference: DatabaseReference? = null
 
@@ -192,26 +199,20 @@ class GraphicsActivity : AppCompatActivity() {
         if (filedName == "Air Quality") dataName = "air_quality"
         if (filedName == "Battery Level") dataName = "battery_voltage"
 
-        // Remove the old listener if it exists
         currentListener?.let { listener ->
             currentDatabaseReference?.removeEventListener(listener)
             Log.d("Firebase", "Removed old listener for $dataName")
         }
 
-        // Initialize Firebase using your specific database URL
         val database = FirebaseDatabase.getInstance()
         Log.d("Firebase", "Database instance: $database")
 
-        // Create a reference to the specific node you want to listen to
-        val myRef: DatabaseReference = database.getReference("/box_id/1212/$dataName")
+        val myRef: DatabaseReference = database.getReference("/box_id/$selectedBoxId/$dataName")
 
-        // Create a new listener for the new metric
         val newListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                // Get the value of light intensity from the snapshot
                 val value = snapshot.getValue(Double::class.java)
 
-                // Update the UI with the new value
                 val lightText = findViewById<TextView>(R.id.temperatureValue)
 
                 when (filedName) {
@@ -225,15 +226,11 @@ class GraphicsActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle errors if the data can't be read
                 Log.e("Firebase", "Failed to read value: ${error.message}")
             }
         }
 
-        // Set the new listener to the reference
         myRef.addValueEventListener(newListener)
-
-        // Store the new listener and reference to remove it later if needed
         currentListener = newListener
         currentDatabaseReference = myRef
 

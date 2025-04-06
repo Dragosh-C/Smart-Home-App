@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_gardient">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Graphics Sensor Settings"
+        android:textSize="26sp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:paddingBottom="10dp"/>
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configure sensor IDs for real-time data display"
+        android:textSize="16sp"
+        android:textColor="#B0B0B0"
+        android:gravity="center"
+        android:paddingBottom="20dp"/>
+
+    <!-- Sensor ID Fields -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/temperatureIdField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Temperature Sensor ID"
+            android:textColorHint="#AAAAAA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/input_background"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/humidityIdField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Humidity Sensor ID"
+            android:textColorHint="#AAAAAA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/input_background"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/powerIdField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Power Sensor ID"
+            android:textColorHint="#AAAAAA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/input_background"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/airQualityIdField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Air Quality Sensor ID"
+            android:textColorHint="#AAAAAA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/input_background"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/lightIdField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Light Sensor ID"
+            android:textColorHint="#AAAAAA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/input_background"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/batteryIdField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Battery Level Sensor ID"
+            android:textColorHint="#AAAAAA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/input_background"
+            android:padding="14dp"
+            android:inputType="text"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Settings"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-medium"
+        android:backgroundTint="#4CAF50"
+        android:layout_marginTop="10dp"
+        android:padding="14dp"
+        android:elevation="6dp"
+        />
+</LinearLayout>

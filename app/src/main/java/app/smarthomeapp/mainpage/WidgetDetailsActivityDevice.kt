@@ -40,6 +40,7 @@ class WidgetDetailsActivityDevice : AppCompatActivity() {
         setContentView(R.layout.activity_widget_detail_device)
 
         widgetId = intent.getStringExtra("widget_port") ?: "1001"
+//        Log.d("Firebase", "Widget ID: $widgetId")
 
         viewModel = ViewModelProvider(this)[GraphicsViewModel::class.java]
 
@@ -80,7 +81,8 @@ class WidgetDetailsActivityDevice : AppCompatActivity() {
         val powerSwitch = findViewById<SwitchCompat>(R.id.powerSwitch)
 
         // write to the database when the switch is toggled
-        val myRef = databaseRef.child("/devices/$deviceId/actuator")
+//        val myRef = databaseRef.child("/devices/$deviceId/actuator")
+        val myRef = databaseRef.child("/devices/$widgetId/actuator")
 
 // Read data from Firebase
         myRef.get().addOnSuccessListener {
