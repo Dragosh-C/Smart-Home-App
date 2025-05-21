@@ -19,6 +19,17 @@
         android:textSize="24sp"
         android:layout_marginBottom="32dp" />
 
+
+    <EditText
+        android:id="@+id/routine_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Routine name"
+        android:background="@drawable/rounded_background"
+        android:padding="16dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="16dp" />
+
     <!-- IF Section -->
     <TextView
         android:layout_width="wrap_content"
@@ -104,6 +115,16 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/checkbox_routine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repeat every day"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,5 +150,25 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/rounded_background" />
     </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Other layout content goes here -->
+
+        <Button
+            android:id="@+id/other_routines_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other types of routines"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/rounded_background"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

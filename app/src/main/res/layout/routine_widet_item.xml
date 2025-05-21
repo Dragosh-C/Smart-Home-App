@@ -139,6 +139,13 @@
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp"/>
         </LinearLayout>
+        <View
+            android:id="@+id/statusIndicator"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/circle_grey"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

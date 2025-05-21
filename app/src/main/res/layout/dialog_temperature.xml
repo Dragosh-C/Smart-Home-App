@@ -8,6 +8,25 @@
     android:background="@drawable/button_gradient_background">
 
     <TextView
+        android:id="@+id/device_id_tile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device ID"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/device_id_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type device id or room name"
+        android:focusable="true"
+        android:padding="12dp"
+        android:background="@drawable/button_gradient_background" />
+
+    <TextView
         android:id="@+id/temperature_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,6 +35,7 @@
         android:textColor="@color/white"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp" />
+
 
     <!-- Condition field -->
     <EditText

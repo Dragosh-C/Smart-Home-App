@@ -60,7 +60,8 @@ class AddNewRoutineThenActivity : AppCompatActivity() {
 
         val conditionField = builder.findViewById<EditText>(R.id.condition_input)
         val relayState = builder.findViewById<EditText>(R.id.relay_state)
-        val saveButton = builder.findViewById<Button>(R.id.save_temperature_button)
+        val saveButton = builder.findViewById<Button>(R.id.save_relay_button)
+        val deviceIDInput = builder.findViewById<EditText>(R.id.device_id_input)
 
         val gradientDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
@@ -103,23 +104,31 @@ class AddNewRoutineThenActivity : AppCompatActivity() {
             val port = conditionField.text.toString()
             val state = relayState.text.toString()
 
-            if (port.isNotBlank() && state.isNotBlank()) {
-                val selectedCondition = "$port is turned $state"
+            if ((port.isNotBlank() or deviceIDInput.text.isNotBlank()) && state.isNotBlank()) {
+
+                var selectedCondition = ""
+                if (port.isNotBlank()) {
+                    selectedCondition = "$port is turned $state"
+                }
+                else {
+                    val deviceID = deviceIDInput.text.toString()
+                    selectedCondition = "Device with ID $deviceID is turned $state"
+                }
+
 
                 // Overwriting selected action dynamically
                 buttonActions["relay"] = selectedCondition
-
-                // Display the updated selected action in your UI
-                val relayTextView = findViewById<TextView>(R.id.relay_title)
-                relayTextView.text = selectedCondition
-
+//
+////                // Display the updated selected action in your UI
+//                val relayTextView = findViewById<TextView>(R.id.relay_title)
+//                relayTextView.text = selectedCondition
+//
                 Toast.makeText(
                     this,
                     "Selected Condition: $selectedCondition",
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Returning result to previous activity
                 val resultIntent = Intent()
                 resultIntent.putExtra("selected_action", selectedCondition)
                 resultIntent.putExtra("title", "Relay")
@@ -215,8 +224,81 @@ class AddNewRoutineThenActivity : AppCompatActivity() {
     }
 
     private fun showAlarmDialog() {
-        // Similar structure for alarm button action (Create a dialog, handle input and update UI)
-    }
+        val builder = Dialog(this)
+        builder.setContentView(R.layout.dialog_alarm)
 
-    // You can add other action buttons (Camera, Lockers, etc.) similarly by adding their dialog methods.
+        val alarmValueInput = builder.findViewById<EditText>(R.id.alarm_value_input)
+        val saveButton = builder.findViewById<Button>(R.id.save_alarm_button)
+
+        val gradientDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 30f
+            setColor(Color.parseColor("#1c1d23"))
+        }
+        builder.window?.setBackgroundDrawable(gradientDrawable)
+
+        val states = listOf("On", "Off")
+        val alarmState = builder.findViewById<EditText>(R.id.alarm_state)
+
+        // Handling states
+        alarmState.setOnClickListener {
+            val popupMenu = PopupMenu(this, alarmState)
+            states.forEach { state ->
+                popupMenu.menu.add(state)
+            }
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                alarmState.setText(menuItem.title)
+                true
+            }
+            popupMenu.show()
+        }
+
+        saveButton.setOnClickListener {
+            var alarmValue = alarmValueInput.text.toString()
+            val alarm = alarmState.text.toString()
+
+            if (alarm.isNotBlank()) {
+
+                if (alarmValue.isBlank()) {
+                    alarmValue = "All devices"
+                }
+
+                val selectedCondition = "$alarmValue turned $alarm"
+
+                // Overwriting selected action dynamically
+                buttonActions["alert"] = selectedCondition
+//
+////                // Display the updated selected action in your UI
+//                val relayTextView = findViewById<TextView>(R.id.relay_title)
+//                relayTextView.text = selectedCondition
+//
+                Toast.makeText(
+                    this,
+                    "Selected Condition: $selectedCondition",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                val resultIntent = Intent()
+                resultIntent.putExtra("selected_action", selectedCondition)
+                resultIntent.putExtra("title", "Alert")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+                builder.dismiss()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Please select state",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        val layoutParams = WindowManager.LayoutParams()
+        layoutParams.copyFrom(builder.window?.attributes)
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        builder.window?.attributes = layoutParams
+        builder.show()
+        }
+
 }

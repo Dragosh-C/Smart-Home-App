@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetDetailsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_gardient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/bg_card_rounded"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/widgetTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Widget Title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+        android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/widgetIfConditionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IF: (condition)"
+            android:textColor="#E0E0E0"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/widgetThenActionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="THEN: (action)"
+            android:textColor="#E0E0E0"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/widgetEnabledSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Activate/Deactivate routine"
+            android:textColor="#D0D0D0"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/widgetRepeatEveryDayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This routine repeats every day"
+            android:textColor="#D0D0D0"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Routine"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

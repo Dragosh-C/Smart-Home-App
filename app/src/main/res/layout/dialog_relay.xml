@@ -28,6 +28,25 @@
         android:background="@drawable/button_gradient_background" />
 
     <TextView
+        android:id="@+id/or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/device_id_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type device id"
+        android:focusable="true"
+        android:padding="12dp"
+        android:background="@drawable/button_gradient_background" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Relay state"
@@ -47,7 +66,7 @@
     android:background="@drawable/button_gradient_background" />
 
     <Button
-        android:id="@+id/save_temperature_button"
+        android:id="@+id/save_relay_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"

@@ -17,10 +17,16 @@
 
     <!-- Switch for special function -->
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/specialFunctionSwitch"
+        android:id="@+id/enableAdaptiveLightSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enable adaptive light" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/repeatSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repead every day" />" />
 
     <Button
         android:id="@+id/alarm_save_button"

@@ -1,8 +1,11 @@
 package app.smarthomeapp.routinespage
 
+import FirebaseHelper
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +14,7 @@ import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import app.smarthomeapp.R
+import app.smarthomeapp.viewmodels.ScenariosViewModel
 import kotlinx.coroutines.launch
 
 class AddNewRoutineActivity : AppCompatActivity() {
@@ -19,11 +23,14 @@ class AddNewRoutineActivity : AppCompatActivity() {
     private lateinit var widgetAdapter: WidgetAdapter
     private lateinit var widgetDatabase: WidgetDatabase
     private lateinit var widgetTitle: String
+    private lateinit var viewModel: ScenariosViewModel
+    private lateinit var deviceId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_add_routine)
+        viewModel = ScenariosViewModel()
 
 
         val ifContainer = findViewById<LinearLayout>(R.id.if_container)
@@ -46,6 +53,11 @@ class AddNewRoutineActivity : AppCompatActivity() {
             finish()
         }
 
+        val titleInput = findViewById<EditText>(R.id.routine_name_input)
+
+        val repeatCheckBox = findViewById<CheckBox>(R.id.checkbox_routine)
+
+
         val saveButton = findViewById<Button>(R.id.save_button)
         saveButton.setOnClickListener {
 
@@ -62,9 +74,17 @@ class AddNewRoutineActivity : AppCompatActivity() {
 
 
                 val widget = Widget1(
-                    title = widgetTitle,
-                    type = "$ifCondition -> $thenAction"
+                    id = lastIdvalue,
+                    title = if (titleInput.text.isNotEmpty()) titleInput.text.toString() else widgetTitle,
+                    type = widgetTitle,
+                    ifCondition = ifCondition,
+                    thenAction = thenAction,
+                    repeatEveryDay = repeatCheckBox.isChecked,
+                    deviceID = deviceId,
                 )
+                // send the widget to the firebase
+                val firebaseHelper = FirebaseHelper()
+                firebaseHelper.addWidgetToDatabase(widget)
 
                 // Save widget to db
                 lifecycleScope.launch {
@@ -77,6 +97,15 @@ class AddNewRoutineActivity : AppCompatActivity() {
             }
 
         }
+
+        val otherTypeRoutine = findViewById<Button>(R.id.other_routines_button)
+        otherTypeRoutine.setOnClickListener {
+            val intent = Intent(this, OtherTypeRoutines::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -86,6 +115,7 @@ class AddNewRoutineActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_CODE_IF -> {
                     val condition = data.getStringExtra("selected_condition")
+                    deviceId = data.getStringExtra("device_id").toString()
                     addConditionView(condition, findViewById(R.id.if_container))
                 }
                 REQUEST_CODE_THEN -> {

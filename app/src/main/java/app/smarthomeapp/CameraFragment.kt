@@ -89,7 +89,7 @@ class CameraFragment : Fragment() {
         centerButton: ImageView,
         view: View
     ) {
-        val ref: DatabaseReference = database.reference.child("coordinates")
+        val ref: DatabaseReference = database.reference.child("camera").child("1001").child("coordinates")
         ref.get().addOnSuccessListener {
             if (it.exists()) {
                 x = (it.child("x").value as Long).toInt()
@@ -152,8 +152,8 @@ class CameraFragment : Fragment() {
             x = 90
             y = 90
             vibrate()
+            updateFirebase()
         }
-
 
         val settingsButton = view.findViewById<ImageButton>(R.id.settings_button_camera)
         settingsButton.setOnClickListener {
@@ -208,7 +208,7 @@ private fun handleButtonPress(action: Int, onIncrement: () -> Unit) {
             "x" to x,
             "y" to y
         )
-        database.reference.child("coordinates").setValue(data)
+        database.reference.child("camera").child("1001").child("coordinates").setValue(data)
     }
 
 }

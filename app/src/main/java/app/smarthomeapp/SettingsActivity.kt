@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
@@ -56,7 +55,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         testButton.setOnClickListener {
-            viewModel.setAlarm(testButton)
+            viewModel.setBuzzer(testButton)
         }
 
 

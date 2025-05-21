@@ -12,24 +12,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.TimeUnit
-import kotlin.coroutines.resume
 
 class ScenariosViewModel : ViewModel() {
 
@@ -146,18 +137,22 @@ class ScenariosViewModel : ViewModel() {
         }
     }
 
-
-    fun setAlarm(context: Context, hour: Int, minute: Int, adaptiveLight: Boolean) {
+    fun setAlarm(context: Context, hour: Int, minute: Int, adaptiveLight: Boolean, repeat: Boolean) {
 
         val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
             putExtra(AlarmClock.EXTRA_HOUR, hour)
             putExtra(AlarmClock.EXTRA_MINUTES, minute)
             putExtra(AlarmClock.EXTRA_MESSAGE, "Smart-Home Alarm")
+            if (repeat) {
+                putExtra(AlarmClock.EXTRA_DAYS, intArrayOf(1, 2, 3, 4, 5, 6, 7))
+
+            }
         }
 
         if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
             _alarmSetMessage.value = "Alarm set for $hour:$minute"
+
         } else {
             _alarmSetMessage.value = "No compatible alarm app found!"
         }
@@ -173,6 +168,13 @@ class ScenariosViewModel : ViewModel() {
 
             val userDocRef = databaseReference.child("users").child(userId)
             userDocRef.child("tasks").child("adaptiveLight").setValue(true)
+
+            if (repeat) {
+                userDocRef.child("tasks").child("adaptiveLight").child("repeat").setValue(true)
+            } else {
+                userDocRef.child("tasks").child("adaptiveLight").child("repeat").setValue(false)
+            }
+
 
             Log.d("ScenariosViewModel", "Adaptive light task set for user: $userId")
 
@@ -209,7 +211,7 @@ class ScenariosViewModel : ViewModel() {
         }
     }
 
-    fun setAlarm(testButton: Button) {
+    fun setBuzzer(testButton: Button) {
         // Reference to the database
         val databaseReference = rtb.reference
         val boxId = "1212"

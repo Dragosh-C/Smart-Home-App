@@ -75,6 +75,14 @@
             android:name=".mainpage.WidgetDetailsActivityDevice"
             android:exported="false" />
 
+        <activity
+            android:name=".routinespage.WidgetDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".routinespage.OtherTypeRoutines"
+            android:exported="false" />
+
         <activity android:name=".GraphicsActivity" android:exported="false" />
         <activity android:name=".SettingsActivity" />
 

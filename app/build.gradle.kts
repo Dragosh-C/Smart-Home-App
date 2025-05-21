@@ -75,6 +75,8 @@ dependencies {
     implementation(libs.androidx.foundation.android)
     implementation(libs.play.services.location)
     implementation(libs.firebase.messaging.ktx)
+    implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.foundation.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

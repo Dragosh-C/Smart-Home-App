@@ -138,10 +138,10 @@ import app.smarthomeapp.R
 
 class AddNewRoutineIfActivity : AppCompatActivity() {
     private lateinit var boxTitle: TextView
+    private lateinit var deviceId: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_if_routine)
-
         val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
             finish()
@@ -172,6 +172,7 @@ class AddNewRoutineIfActivity : AppCompatActivity() {
         val conditionField = builder.findViewById<EditText>(R.id.condition_input)
         val valueInputField = builder.findViewById<EditText>(R.id.temperature_input) // Reusing temperature_input
         val saveButton = builder.findViewById<Button>(R.id.save_temperature_button)
+        deviceId = builder.findViewById(R.id.device_id_input)
 
         val gradientDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
@@ -238,6 +239,7 @@ class AddNewRoutineIfActivity : AppCompatActivity() {
         // Pass the result back to the main activity
         val resultIntent = Intent()
         resultIntent.putExtra("selected_condition", selectedCondition)
+        resultIntent.putExtra("device_id", deviceId.text.toString())
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }
