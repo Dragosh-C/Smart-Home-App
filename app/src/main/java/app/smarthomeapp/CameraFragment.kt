@@ -67,7 +67,21 @@ class CameraFragment : Fragment() {
 
 //      webView.loadUrl("https://rt.ivs.rocks/demos/pk-mode")
 
-        webView.loadUrl("http://192.168.45.124/")
+        // read the url from /camera/1001/ngrok_url
+
+        val urlRef: DatabaseReference = database.reference.child("camera").child("1001").child("ngrok_url")
+        urlRef.get().addOnSuccessListener {
+            if (it.exists()) {
+                val url = it.value as String
+                webView.loadUrl(url)
+            } else {
+                Log.d("CameraFragment", "URL not found in Firebase")
+            }
+        }.addOnFailureListener {
+            Log.e("CameraFragment", "Error getting URL from Firebase", it)
+        }
+
+//        webView.loadUrl("https://a473-109-166-133-38.ngrok-free.app/")
 
         val leftButton: ImageView = view.findViewById(R.id.joystick_left)
         val rightButton: ImageView = view.findViewById(R.id.joystick_right)
