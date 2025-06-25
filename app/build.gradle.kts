@@ -5,7 +5,7 @@ plugins {
 
     id("com.google.devtools.ksp")
 
-
+    id("com.google.firebase.firebase-perf") version "1.4.2" apply false
 }
 
 android {
@@ -13,11 +13,9 @@ android {
     compileSdk = 35
 
 
-
-
     defaultConfig {
         applicationId = "app.smarthomeapp"
-        minSdk = 34
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -82,6 +80,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.perf)
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -111,12 +110,14 @@ dependencies {
     implementation(libs.androidx.room.runtime)
 
 
-        // Retrofit library
-        implementation (libs.retrofit)
+    // Retrofit library
+    implementation (libs.retrofit)
 
-        implementation (libs.converter.gson)
+    implementation (libs.converter.gson)
 
-        implementation (libs.logging.interceptor)
+    implementation (libs.logging.interceptor)
+
+
 
 
 

@@ -187,6 +187,172 @@
        </com.google.android.material.card.MaterialCardView>
 
 
+       <com.google.android.material.card.MaterialCardView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+
+           app:cardCornerRadius="16dp"
+           app:cardElevation="8dp"
+           app:cardBackgroundColor="@android:color/transparent"
+           app:strokeColor="@android:color/white"
+           app:strokeWidth="0.5dp"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:padding="10dp"
+               android:elevation="4dp"
+               android:gravity="center_vertical"
+               android:background="#50575757">
+
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:text="Lock Door"
+                   android:textSize="18sp"
+                   android:textColor="@android:color/white"
+                   android:fontFamily="sans-serif-medium"
+                   style="?attr/textAppearanceHeadline6" />
+
+               <androidx.appcompat.widget.SwitchCompat
+                   android:id="@+id/lock_door"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+           </LinearLayout>
+       </com.google.android.material.card.MaterialCardView>
+
+
+       <com.google.android.material.card.MaterialCardView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+
+           app:cardCornerRadius="16dp"
+           app:cardElevation="8dp"
+           app:cardBackgroundColor="@android:color/transparent"
+           app:strokeColor="@android:color/white"
+           app:strokeWidth="0.5dp"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:padding="10dp"
+               android:elevation="4dp"
+               android:gravity="center_vertical"
+               android:background="#50575757">
+
+               <TextView
+                   android:id="@+id/enable_password_access"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:text="Enable Access with PIN in house"
+                   android:textSize="18sp"
+                   android:textColor="@android:color/white"
+                   android:fontFamily="sans-serif-medium"
+                   style="?attr/textAppearanceHeadline6" />
+
+               <androidx.appcompat.widget.SwitchCompat
+                   android:id="@+id/enable_access_with_password"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+           </LinearLayout>
+       </com.google.android.material.card.MaterialCardView>
+
+       <com.google.android.material.card.MaterialCardView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+
+           app:cardCornerRadius="16dp"
+           app:cardElevation="8dp"
+           app:cardBackgroundColor="@android:color/transparent"
+           app:strokeColor="@android:color/white"
+           app:strokeWidth="0.5dp"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:padding="10dp"
+               android:elevation="4dp"
+               android:gravity="center_vertical"
+               android:background="#50575757">
+
+               <TextView
+                   android:id="@+id/enable_rfid_access"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:text="Enable Access with RFID in house"
+                   android:textSize="18sp"
+                   android:textColor="@android:color/white"
+                   android:fontFamily="sans-serif-medium"
+                   style="?attr/textAppearanceHeadline6" />
+
+               <androidx.appcompat.widget.SwitchCompat
+                   android:id="@+id/enable_access_with_rfid"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+           </LinearLayout>
+       </com.google.android.material.card.MaterialCardView>
+
+
+
+       <com.google.android.material.card.MaterialCardView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+
+           app:cardCornerRadius="16dp"
+           app:cardElevation="8dp"
+           app:cardBackgroundColor="@android:color/transparent"
+           app:strokeColor="@android:color/white"
+           app:strokeWidth="0.5dp"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:background="#50575757">
+
+                <EditText
+                     android:id="@+id/tv_change_password"
+                     android:layout_height="wrap_content"
+                     android:layout_width="0dp"
+                     android:layout_weight="1"
+                     android:hint="Change Door Lock PIN"
+                     android:textSize="18sp"
+                     android:textColor="@android:color/white"
+                     android:fontFamily="sans-serif-medium"
+                     style="?attr/textAppearanceHeadline6" />
+
+                <Button
+                     android:id="@+id/btn_change_password"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Change" />
+              </LinearLayout>
+       </com.google.android.material.card.MaterialCardView>
    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

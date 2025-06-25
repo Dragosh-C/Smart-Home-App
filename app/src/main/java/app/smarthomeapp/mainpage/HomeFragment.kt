@@ -20,6 +20,8 @@ import app.smarthomeapp.R
 import app.smarthomeapp.SettingsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.perf.FirebasePerformance
+import com.google.firebase.perf.metrics.Trace
 
 data class Widget(
     val name: String = "",
@@ -307,12 +309,15 @@ class HomeFragment : Fragment() {
 
     private fun addNewWidget(name: String, port: String, type: String) {
         val widget = Widget(name, port, type, false)
+        val trace: Trace = FirebasePerformance.getInstance().newTrace("firebase_write_time")
+        trace.start()
         db.collection("users").document(auth.currentUser!!.uid).collection("rooms").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val room = document.data
                     val roomName = room["name"] as String
                     val isSelected = room["isSelected"] as Boolean
+
                     if (isSelected) {
                         db.collection("users").document(auth.currentUser!!.uid).collection("rooms")
                             .document(roomName).collection("widgets").document(name).set(widget)
@@ -330,6 +335,7 @@ class HomeFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
+                        trace.stop()
                         addWidgetToGridLayout(requireContext(), widget, gridLayout, db, auth, isEditMode, widgetViews)
 
                     }

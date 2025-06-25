@@ -17,6 +17,8 @@ import app.smarthomeapp.viewmodels.ScenariosViewModel
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var viewModel: ScenariosViewModel
+    // init firebase database
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,6 +28,15 @@ class SettingsActivity : AppCompatActivity() {
 
         val switchButton = findViewById<SwitchCompat>(R.id.switch_enable_location)
         val testButton = findViewById<Button>(R.id.btn_test_alarm)
+
+        val lockDoorButtonSwitch = findViewById<SwitchCompat>(R.id.lock_door)
+        val enablePasswordAccessSwitch = findViewById<SwitchCompat>(R.id.enable_access_with_password)
+        val enableRFIDAccessSwitch = findViewById<SwitchCompat>(R.id.enable_access_with_rfid)
+        val changePasswordButton = findViewById<Button>(R.id.btn_change_password)
+        val passwordEditText = findViewById<EditText>(R.id.tv_change_password)
+
+        val databaseReference = FirebaseUtils.databaseRef
+
 
         // Restore the saved state of the switch
         val sharedPref = getSharedPreferences("app.smarthomeapp", MODE_PRIVATE)
@@ -57,6 +68,49 @@ class SettingsActivity : AppCompatActivity() {
         testButton.setOnClickListener {
             viewModel.setBuzzer(testButton)
         }
+
+        // send to firebase box_id/4123/door_lock
+        lockDoorButtonSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                databaseReference.child("box_id").child("4123").child("door_lock").setValue(true)
+                Toast.makeText(this, "Door locked", Toast.LENGTH_SHORT).show()
+            } else {
+                databaseReference.child("box_id").child("4123").child("door_lock").setValue(false)
+                Toast.makeText(this, "Door unlocked", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        enablePasswordAccessSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                databaseReference.child("box_id").child("4123").child("enable_pin").setValue(true)
+                Toast.makeText(this, "Password access enabled", Toast.LENGTH_SHORT).show()
+            } else {
+                databaseReference.child("box_id").child("4123").child("enable_pin").setValue(false)
+                Toast.makeText(this, "Password access disabled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        enableRFIDAccessSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                databaseReference.child("box_id").child("4123").child("enable_rfid").setValue(true)
+                Toast.makeText(this, "RFID access enabled", Toast.LENGTH_SHORT).show()
+            } else {
+                databaseReference.child("box_id").child("4123").child("enable_rfid").setValue(false)
+                Toast.makeText(this, "RFID access disabled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        changePasswordButton.setOnClickListener {
+            val newPassword = passwordEditText.text.toString()
+            if (newPassword.isNotBlank()) {
+                // Save the new password to Firebase
+                databaseReference.child("box_id").child("4123").child("password").setValue(newPassword)
+                Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Please enter a new password", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
 
     }
