@@ -111,7 +111,7 @@ class CameraFragment : Fragment() {
             }
         }
 
-        rightButton.setOnTouchListener { _, event ->
+        leftButton.setOnTouchListener { _, event ->
             handleButtonPress(event.action, {
                 if (x < 180) {
                     x+=2
@@ -122,7 +122,7 @@ class CameraFragment : Fragment() {
             true
         }
 
-        leftButton.setOnTouchListener { _, event ->
+        rightButton.setOnTouchListener { _, event ->
             handleButtonPress(event.action, {
                 if (x > 0) {
                     x-=2

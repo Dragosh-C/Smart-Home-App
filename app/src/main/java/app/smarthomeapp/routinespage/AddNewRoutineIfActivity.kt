@@ -133,6 +133,7 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import app.smarthomeapp.R
 
@@ -140,6 +141,7 @@ class AddNewRoutineIfActivity : AppCompatActivity() {
     private lateinit var boxTitle: TextView
     private lateinit var deviceId: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_if_routine)
         val backButton = findViewById<ImageView>(R.id.back_button)

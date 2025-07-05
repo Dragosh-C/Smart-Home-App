@@ -76,7 +76,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         )
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_smart_house) // Replace with your app's icon
+            .setSmallIcon(R.drawable.ic_smart_house)
             .setContentTitle(title ?: "Smart Home Notification")
             .setContentText(message ?: "You have a new notification.")
             .setAutoCancel(true)

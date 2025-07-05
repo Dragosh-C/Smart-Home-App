@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import app.smarthomeapp.viewmodels.ScenariosViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var viewModel: ScenariosViewModel
@@ -34,6 +37,7 @@ class SettingsActivity : AppCompatActivity() {
         val enableRFIDAccessSwitch = findViewById<SwitchCompat>(R.id.enable_access_with_rfid)
         val changePasswordButton = findViewById<Button>(R.id.btn_change_password)
         val passwordEditText = findViewById<EditText>(R.id.tv_change_password)
+        val alarmSwitch = findViewById<SwitchCompat>(R.id.switch_enable_alarm)
 
         val databaseReference = FirebaseUtils.databaseRef
 
@@ -111,6 +115,46 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
+        alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                databaseReference.child("box_id").child("4123").child("alarm").setValue(true)
+                Toast.makeText(this, "Alarm enabled", Toast.LENGTH_SHORT).show()
+            } else {
+                databaseReference.child("box_id").child("4123").child("alarm").setValue(false)
+                Toast.makeText(this, "Alarm disabled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        // listen also from changes from firebase for each switch
+        databaseReference.child("box_id").child("4123").child("door_lock")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val isLocked = snapshot.getValue(Boolean::class.java) ?: false
+                    lockDoorButtonSwitch.isChecked = isLocked
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@SettingsActivity, "Failed to read door lock state", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
+        // alarm
+
+        databaseReference.child("box_id").child("4123").child("alarm")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val isAlarmEnabled = snapshot.getValue(Boolean::class.java) ?: false
+                    alarmSwitch.isChecked = isAlarmEnabled
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@SettingsActivity, "Failed to read alarm state", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
 
 
     }
@@ -161,6 +205,8 @@ class SettingsActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+
 
 
         val layoutParams = WindowManager.LayoutParams()
