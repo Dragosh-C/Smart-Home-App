@@ -46,9 +46,9 @@ Open the project in Android Studio.
 Images of the app:
 
 <p>
-  <img src="images/img1.jpeg" width="150" />
-  <img src="images/img2.jpeg" width="150" />
-  <img src="images/img3.jpeg" width="150" />
+  <img src="images/img1.jpeg" width="250" />
+  <img src="images/img2.jpeg" width="250" />
+  <img src="images/img3.jpeg" width="250" />
 </p>
 
 
