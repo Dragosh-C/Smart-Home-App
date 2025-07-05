@@ -24,23 +24,24 @@ temperature, security, and other IoT-enabled features, designed for seamless int
 ## 🛠️ Setup Instructions
 
 1. Clone the repository:
-Open the project in Android Studio.
+
+    - Open the project in Android Studio.
 
 2. Set up Firebase:
 
-    Go to Firebase Console and create a new project.
+    - Go to Firebase Console and create a new project.
 
-    Add a new Android app in your Firebase project settings.
+    - Add a new Android app in your Firebase project settings.
 
-    Download the google-services.json file.
+    - Download the google-services.json file.
 
-    Place the google-services.json file in your app module’s app/ directory.
+    - Place the google-services.json file in your app module’s app/ directory.
 
 3. Update Firebase references in code:
 
-    Open the project and replace any placeholder Firebase URLs or keys with your own.
+    - Open the project and replace any placeholder Firebase URLs or keys with your own.
 
-    Look for the Firebase database URL or Firestore references and update them to match your project (FirebaseService.kt, and other files).
+    - Look for the Firebase database URL or Firestore references and update them to match your project (FirebaseService.kt, and other files).
 
 
 ## Images of the app:
