@@ -43,3 +43,7 @@ Open the project in Android Studio.
     Look for the Firebase database URL or Firestore references and update them to match your project (FirebaseService.kt, and other files).
 
 
+Images of the app:
+
+![Alt text](images/WhatsApp Image 2025-07-05 at 23.45.53.jpeg)
+
