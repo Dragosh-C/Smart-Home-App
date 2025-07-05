@@ -45,5 +45,5 @@ Open the project in Android Studio.
 
 Images of the app:
 
-![Alt text](images/WhatsApp Image 2025-07-05 at 23.45.53.jpeg)
+![Alt text](images/img1.jpeg)
 
