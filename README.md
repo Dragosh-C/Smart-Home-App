@@ -43,12 +43,24 @@ Open the project in Android Studio.
     Look for the Firebase database URL or Firestore references and update them to match your project (FirebaseService.kt, and other files).
 
 
-Images of the app:
+## Images of the app:
 
 <p>
   <img src="images/img1.jpeg" width="250" />
   <img src="images/img2.jpeg" width="250" />
   <img src="images/img3.jpeg" width="250" />
+</p>
+
+<p>
+  <img src="images/img4.jpeg" width="250" />
+  <img src="images/img5.jpeg" width="250" />
+  <img src="images/img6.jpeg" width="250" />
+</p>
+
+<p>
+  <img src="images/img7.jpeg" width="250" />
+  <img src="images/img8.jpeg" width="250" />
+  <img src="images/img9.jpeg" width="250" />
 </p>
 
 
