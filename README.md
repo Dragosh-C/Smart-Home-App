@@ -1,7 +1,7 @@
 # Smart Home App
 
 A Kotlin-based mobile application for controlling and monitoring smart home devices. This app provides an intuitive interface for managing lights,
-temperature, security, and other IoT-enabled features, designed for seamless integration with HomeControl Box system.
+temperature, security, and other IoT-enabled features, designed for seamless integration with [HomeControl Box](https://github.com/Dragosh-C/HomeControl-Box) system.
 
 ## Features
 
